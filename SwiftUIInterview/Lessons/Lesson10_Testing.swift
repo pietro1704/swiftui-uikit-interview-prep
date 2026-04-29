@@ -1,27 +1,27 @@
 import SwiftUI
 
-// MARK: - Lição 10 — Testes
+// MARK: - Lesson 10 — Testing
 //
-// Para entrevista: foque em testar ViewModels (não a view).
-// O CounterViewModel da lição 05 já é testável pois é puro Swift.
+// For interviews: focus on testing ViewModels (not the view itself).
+// The `CounterViewModel` from lesson 05 is already testable since it's pure Swift.
 
 struct Lesson10View: View {
     var body: some View {
         LessonScaffold(
-            title: "10 — Testes",
-            goal: "Estruturar ViewModels testáveis e escrever XCTest cases.",
+            title: "10 — Testing",
+            goal: "Structure testable ViewModels and write XCTest cases.",
             exercise: """
-            Veja o arquivo `SwiftUIInterviewTests/CounterViewModelTests.swift`.
+            See `SwiftUIInterviewTests/CounterViewModelTests.swift`.
 
-            1. Adicione um teste para `decrement()` quando count == 0 (não deve ficar negativo).
-            2. Teste o histórico depois de 3 increments + 1 decrement.
-            3. Bônus: crie um protocolo `Clock` injetado no VM para testar tempo.
+            1. Add a test for `decrement()` when count == 0 (should not go negative).
+            2. Test the history after 3 increments + 1 decrement.
+            3. Bonus: introduce a `Clock` protocol injected into the VM to test time.
             """
         ) {
             VStack(alignment: .leading, spacing: 12) {
-                Label("Cmd+U no Xcode roda os testes", systemImage: "play.circle")
-                Label("Use injeção de dependências p/ isolar I/O", systemImage: "arrow.triangle.merge")
-                Label("Testes de Snapshot p/ UI (lib pointfreeco)", systemImage: "camera")
+                Label("Cmd+U in Xcode runs the tests", systemImage: "play.circle")
+                Label("Use dependency injection to isolate IO", systemImage: "arrow.triangle.merge")
+                Label("Snapshot testing for UI (pointfreeco lib)", systemImage: "camera")
             }
         }
     }

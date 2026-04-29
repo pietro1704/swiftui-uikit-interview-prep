@@ -1,10 +1,10 @@
 import SwiftUI
 
-// MARK: - Lição 03 — NavigationStack
+// MARK: - Lesson 03 — NavigationStack
 //
-// Substitui NavigationView (deprecated). Push declarativo via:
+// Replaces NavigationView (deprecated). Declarative push via:
 //  - NavigationLink(value:) { label } + .navigationDestination(for:)
-//  - NavigationStack(path:) para navegação programática
+//  - NavigationStack(path:) for fully programmatic navigation
 
 enum Route: Hashable {
     case detail(Int)
@@ -17,11 +17,11 @@ struct Lesson03View: View {
     var body: some View {
         LessonScaffold(
             title: "03 — Navigation",
-            goal: "Navegação tipada e controle programático do path.",
+            goal: "Type-safe navigation with full programmatic control over the path.",
             exercise: """
-            1. Adicione um botão "Pop to root" que esvazia `path`.
-            2. Crie um deep link: tap leva para detail(7) e depois profile("Ana").
-            3. Use `.toolbar` para botão de voltar customizado.
+            1. Add a "Pop to root" button that empties `path`.
+            2. Build a deep link: a single tap pushes detail(7) then profile("Ana").
+            3. Use `.toolbar` to add a custom back button.
             """
         ) {
             VStack(spacing: 12) {
@@ -36,7 +36,7 @@ struct Lesson03View: View {
                 }
                 .buttonStyle(.borderedProminent)
 
-                Text("Path atual: \(path.count) níveis")
+                Text("Current path depth: \(path.count)")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -59,7 +59,7 @@ private struct DetailView: View {
     var body: some View {
         VStack(spacing: 16) {
             Text("Detail #\(id)").font(.largeTitle)
-            Button("Ir para profile") { path.append(.profile("User \(id)")) }
+            Button("Go to profile") { path.append(.profile("User \(id)")) }
             Button("Pop to root") { path.removeAll() }
         }
         .navigationTitle("Detail \(id)")

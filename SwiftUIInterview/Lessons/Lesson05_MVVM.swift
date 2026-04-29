@@ -1,10 +1,11 @@
 import SwiftUI
 import Observation
 
-// MARK: - Lição 05 — @Observable + MVVM
+// MARK: - Lesson 05 — @Observable + MVVM
 //
-// iOS 17+ trouxe a macro `@Observable` que substitui ObservableObject/@Published.
-// Vantagens: granularidade fina (re-render apenas no campo lido), menos boilerplate.
+// iOS 17+ introduces the `@Observable` macro, which replaces `ObservableObject`/`@Published`.
+// Benefits: per-keypath tracking (a view re-renders only when the field it reads changes),
+// less boilerplate.
 
 @Observable
 final class CounterViewModel {
@@ -34,11 +35,11 @@ struct Lesson05View: View {
     var body: some View {
         LessonScaffold(
             title: "05 — MVVM",
-            goal: "Separar lógica de apresentação usando @Observable.",
+            goal: "Separate presentation logic from the view using @Observable.",
             exercise: """
-            1. Adicione `undo()` ao ViewModel que reverte o último incremento.
-            2. Escreva um teste em SwiftUIInterviewTests que valida `canDecrement`.
-            3. Bônus: injete um protocolo `CounterStorage` para persistir state.
+            1. Add `undo()` to the ViewModel so it reverts the last increment.
+            2. Write a test in SwiftUIInterviewTests that exercises `canDecrement`.
+            3. Bonus: inject a `CounterStorage` protocol so state can be persisted.
             """
         ) {
             VStack(spacing: 12) {
@@ -50,9 +51,9 @@ struct Lesson05View: View {
                 }
                 .buttonStyle(.borderedProminent)
 
-                GroupBox("Histórico") {
+                GroupBox("History") {
                     if vm.history.isEmpty {
-                        Text("Sem ações ainda").foregroundStyle(.secondary)
+                        Text("No actions yet").foregroundStyle(.secondary)
                     } else {
                         Text(vm.history.map(String.init).joined(separator: " → "))
                             .font(.callout.monospaced())

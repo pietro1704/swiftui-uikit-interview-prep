@@ -84,13 +84,16 @@ final class ConcurrencyVM {
     func startStream() {
         streamTicks.removeAll()
         streamTask?.cancel()
-        let stream = AsyncStream<Int> { continuation in
-            let timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-                continuation.yield(Int.random(in: 1...100))
-            }
-            continuation.onTermination = { _ in timer.invalidate() }
-        }
         streamTask = Task { [weak self] in
+            let stream = AsyncStream<Int> { continuation in
+                Task {
+                    while !Task.isCancelled {
+                        try? await Task.sleep(for: .milliseconds(500))
+                        continuation.yield(Int.random(in: 1...100))
+                    }
+                    continuation.finish()
+                }
+            }
             for await value in stream {
                 guard !Task.isCancelled else { break }
                 await MainActor.run { self?.streamTicks.append("\(value)") }

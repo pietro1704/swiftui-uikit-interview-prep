@@ -1,9 +1,9 @@
 import SwiftUI
 import Combine
 
-// MARK: - Lição 07 — Combine
+// MARK: - Lesson 07 — Combine
 //
-// Mesmo com async/await, Combine ainda é onipresente em apps legados:
+// Even with async/await, Combine still appears everywhere in legacy apps:
 // publishers, operators (debounce, map, removeDuplicates), sinks.
 
 @Observable
@@ -39,14 +39,14 @@ struct Lesson07View: View {
     var body: some View {
         LessonScaffold(
             title: "07 — Combine",
-            goal: "Pipeline reativo com debounce p/ não filtrar a cada tecla.",
+            goal: "A reactive pipeline with debounce so we don't filter on every keystroke.",
             exercise: """
-            1. Adicione `.throttle` em vez de debounce e compare o comportamento.
-            2. Implemente um publisher custom que emite o tamanho da query.
-            3. Bônus: combine 2 publishers (query + toggle) com `combineLatest`.
+            1. Swap `debounce` for `throttle` and compare the behavior.
+            2. Build a custom publisher that emits the query length.
+            3. Bonus: combine two publishers (query + toggle) with `combineLatest`.
             """
         ) {
-            TextField("Buscar", text: Binding(
+            TextField("Search", text: Binding(
                 get: { vm.query },
                 set: { vm.query = $0 }
             ))

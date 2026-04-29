@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: List available simulators
+        run: xcrun simctl list devices available | head -40
+
+      - name: Pick a simulator
+        id: sim
+        run: |
+          DEVICE=$(xcrun simctl list devices available | grep -E "iPhone 1[5-9]" | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
+          echo "device_id=$DEVICE" >> $GITHUB_OUTPUT
+          echo "Selected simulator: $DEVICE"
+
+      - name: Build
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project SwiftUIInterview.xcodeproj \
+            -scheme SwiftUIInterview \
+            -destination "id=${{ steps.sim.outputs.device_id }}" \
+            -configuration Debug \
+            build | xcbeautify --renderer github-actions || xcodebuild \
+              -project SwiftUIInterview.xcodeproj \
+              -scheme SwiftUIInterview \
+              -destination "id=${{ steps.sim.outputs.device_id }}" \
+              -configuration Debug \
+              build
+
+      - name: Test
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project SwiftUIInterview.xcodeproj \
+            -scheme SwiftUIInterview \
+            -destination "id=${{ steps.sim.outputs.device_id }}" \
+            -configuration Debug \
+            test | xcbeautify --renderer github-actions || xcodebuild \
+              -project SwiftUIInterview.xcodeproj \
+              -scheme SwiftUIInterview \
+              -destination "id=${{ steps.sim.outputs.device_id }}" \
+              -configuration Debug \
+              test
+
+      - name: Install xcbeautify (post-failure pretty output)
+        if: failure()
+        run: brew install xcbeautify || true

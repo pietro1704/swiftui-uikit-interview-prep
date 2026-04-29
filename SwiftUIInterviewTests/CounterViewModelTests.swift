@@ -2,7 +2,7 @@ import XCTest
 @testable import SwiftUIInterview
 
 final class CounterViewModelTests: XCTestCase {
-    func test_increment_aumenta_count_e_history() {
+    func test_increment_increasesCountAndAppendsHistory() {
         let vm = CounterViewModel()
         vm.increment()
         vm.increment()
@@ -10,12 +10,12 @@ final class CounterViewModelTests: XCTestCase {
         XCTAssertEqual(vm.history, [1, 2])
     }
 
-    func test_canDecrement_falso_quando_zero() {
+    func test_canDecrement_isFalseWhenZero() {
         let vm = CounterViewModel()
         XCTAssertFalse(vm.canDecrement)
     }
 
-    func test_reset_zera_estado() {
+    func test_reset_clearsState() {
         let vm = CounterViewModel()
         vm.increment(); vm.increment()
         vm.reset()
@@ -23,5 +23,5 @@ final class CounterViewModelTests: XCTestCase {
         XCTAssertTrue(vm.history.isEmpty)
     }
 
-    // TODO Exercício: complete com mais cenários (ver Lesson10)
+    // TODO Exercise: complete with the additional scenarios listed in Lesson10.
 }

@@ -1,9 +1,9 @@
 import SwiftUI
 
-// MARK: - Lição 08 — Animações
+// MARK: - Lesson 08 — Animations
 //
-// `withAnimation { }` envolve mudanças de state.
-// `matchedGeometryEffect` cria transições "hero" entre views.
+// `withAnimation { }` wraps state changes.
+// `matchedGeometryEffect` builds "hero" transitions between views.
 
 struct Lesson08View: View {
     @State private var expanded = false
@@ -13,19 +13,19 @@ struct Lesson08View: View {
 
     var body: some View {
         LessonScaffold(
-            title: "08 — Animações",
-            goal: "Animar mudanças de layout e estado com springs e matched geometry.",
+            title: "08 — Animations",
+            goal: "Animate layout and state changes with springs and matched geometry.",
             exercise: """
-            1. Adicione `.transition(.scale.combined(with: .opacity))` ao card expandido.
-            2. Crie um `Picker` segmentado animado com matchedGeometryEffect.
-            3. Bônus: gesto de drag que volta com spring ao soltar.
+            1. Apply `.transition(.scale.combined(with: .opacity))` to the expanded card.
+            2. Build a segmented `Picker` animated via matchedGeometryEffect.
+            3. Bonus: drag gesture that springs back on release.
             """
         ) {
             VStack(spacing: 16) {
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(.tint.gradient)
+                    .fill(LinearGradient(colors: [.blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
                     .frame(height: expanded ? 200 : 80)
-                    .overlay(Text(expanded ? "Recolher" : "Expandir").foregroundStyle(.white))
+                    .overlay(Text(expanded ? "Collapse" : "Expand").foregroundStyle(.white))
                     .onTapGesture {
                         withAnimation(.spring(duration: 0.45, bounce: 0.3)) {
                             expanded.toggle()

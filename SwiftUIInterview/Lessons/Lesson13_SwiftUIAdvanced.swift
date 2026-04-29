@@ -43,7 +43,7 @@ extension EnvironmentValues {
 
 // 4) ViewBuilder em função
 @ViewBuilder
-private func badge(_ text: String, ok: Bool) -> some View {
+private func statusBadge(_ text: String, ok: Bool) -> some View {
     if ok {
         Label(text, systemImage: "checkmark.seal.fill").foregroundStyle(.green)
     } else {
@@ -88,8 +88,8 @@ struct Lesson13View: View {
             }
 
             GroupBox("@ViewBuilder helper") {
-                badge("Compilou", ok: true)
-                badge("Testes", ok: false)
+                statusBadge("Compilou", ok: true)
+                statusBadge("Testes", ok: false)
             }
         }
     }

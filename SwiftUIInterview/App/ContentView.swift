@@ -27,20 +27,20 @@ enum LessonTopic: Hashable {
 
 struct ContentView: View {
     let lessons: [Lesson] = [
-        .init(id: 1, title: "01 — @State & @Binding", summary: "Estado local e fluxo unidirecional", icon: "switch.2", topic: .stateBinding),
-        .init(id: 2, title: "02 — List & ForEach", summary: "Listas dinâmicas, swipe actions", icon: "list.bullet.rectangle", topic: .lists),
-        .init(id: 3, title: "03 — NavigationStack", summary: "Navegação com path programático", icon: "arrow.forward.circle", topic: .navigation),
-        .init(id: 4, title: "04 — Form & Validação", summary: "Formulários e regras de validação", icon: "checkmark.rectangle.stack", topic: .forms),
-        .init(id: 5, title: "05 — @Observable + MVVM", summary: "Macro Observation e arquitetura", icon: "rectangle.stack", topic: .mvvm),
-        .init(id: 6, title: "06 — async/await + URLSession", summary: "Concorrência moderna em rede", icon: "network", topic: .asyncAwait),
-        .init(id: 7, title: "07 — Combine", summary: "Publishers, debounce em busca", icon: "antenna.radiowaves.left.and.right", topic: .combine),
-        .init(id: 8, title: "08 — Animações", summary: "withAnimation, matchedGeometry", icon: "wand.and.stars", topic: .animations),
-        .init(id: 9, title: "09 — SwiftData", summary: "@Model, @Query, persistência", icon: "externaldrive", topic: .swiftData),
-        .init(id: 10, title: "10 — Testes", summary: "Unit tests do ViewModel", icon: "checkmark.shield", topic: .testing),
-        .init(id: 11, title: "11 — Interop UIKit ↔ SwiftUI", summary: "Representable, HostingController", icon: "arrow.triangle.2.circlepath", topic: .interop),
-        .init(id: 12, title: "12 — UIKit avançado", summary: "Compositional, Diffable, custom UIControl", icon: "square.grid.3x3", topic: .uikitAdvanced),
-        .init(id: 13, title: "13 — SwiftUI avançado", summary: "PreferenceKey, GeometryReader, ViewModifier", icon: "puzzlepiece.extension", topic: .swiftUIAdvanced),
-        .init(id: 14, title: "14 — Concurrency avançada", summary: "TaskGroup, actor, AsyncStream", icon: "cpu", topic: .concurrencyAdvanced),
+        .init(id: 1, title: "01 — @State & @Binding", summary: "Local state and unidirectional flow", icon: "switch.2", topic: .stateBinding),
+        .init(id: 2, title: "02 — List & ForEach", summary: "Dynamic lists, swipe actions", icon: "list.bullet.rectangle", topic: .lists),
+        .init(id: 3, title: "03 — NavigationStack", summary: "Programmatic-path navigation", icon: "arrow.forward.circle", topic: .navigation),
+        .init(id: 4, title: "04 — Form & Validation", summary: "Forms and validation rules", icon: "checkmark.rectangle.stack", topic: .forms),
+        .init(id: 5, title: "05 — @Observable + MVVM", summary: "Observation macro and architecture", icon: "rectangle.stack", topic: .mvvm),
+        .init(id: 6, title: "06 — async/await + URLSession", summary: "Modern networking concurrency", icon: "network", topic: .asyncAwait),
+        .init(id: 7, title: "07 — Combine", summary: "Publishers, debounced search", icon: "antenna.radiowaves.left.and.right", topic: .combine),
+        .init(id: 8, title: "08 — Animations", summary: "withAnimation, matchedGeometry", icon: "wand.and.stars", topic: .animations),
+        .init(id: 9, title: "09 — SwiftData", summary: "@Model, @Query, persistence", icon: "externaldrive", topic: .swiftData),
+        .init(id: 10, title: "10 — Testing", summary: "Unit tests on the ViewModel", icon: "checkmark.shield", topic: .testing),
+        .init(id: 11, title: "11 — UIKit ↔ SwiftUI Interop", summary: "Representable, HostingController", icon: "arrow.triangle.2.circlepath", topic: .interop),
+        .init(id: 12, title: "12 — Advanced UIKit", summary: "Compositional, Diffable, custom UIControl", icon: "square.grid.3x3", topic: .uikitAdvanced),
+        .init(id: 13, title: "13 — Advanced SwiftUI", summary: "PreferenceKey, GeometryReader, ViewModifier", icon: "puzzlepiece.extension", topic: .swiftUIAdvanced),
+        .init(id: 14, title: "14 — Advanced Concurrency", summary: "TaskGroup, actor, AsyncStream", icon: "cpu", topic: .concurrencyAdvanced),
     ]
 
     var body: some View {
@@ -62,7 +62,7 @@ struct ContentView: View {
                     .padding(.vertical, 4)
                 }
             }
-            .navigationTitle("SwiftUI p/ Beon")
+            .navigationTitle("SwiftUI Interview Prep")
             .navigationDestination(for: LessonTopic.self) { topic in
                 lessonView(for: topic)
             }

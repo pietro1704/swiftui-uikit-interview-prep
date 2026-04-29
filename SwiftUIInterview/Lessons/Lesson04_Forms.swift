@@ -1,8 +1,9 @@
 import SwiftUI
 
-// MARK: - Lição 04 — Form & validação
+// MARK: - Lesson 04 — Form & validation
 //
-// Form é uma List estilizada para inputs. Combine com computed properties para validação derivada.
+// Form is a styled List built for inputs. Combine it with computed properties
+// for derived, reactive validation.
 
 struct Lesson04View: View {
     @State private var email = ""
@@ -27,40 +28,40 @@ struct Lesson04View: View {
     var body: some View {
         LessonScaffold(
             title: "04 — Form",
-            goal: "Formulários com validação reativa baseada em computed properties.",
+            goal: "Reactive validation backed by computed properties.",
             exercise: """
-            1. Adicione confirmação de senha com mensagem de erro inline.
-            2. Mostre `ProgressView` ao submeter e desabilite o botão.
-            3. Bônus: extraia validação para um struct `SignUpValidator` testável.
+            1. Add a confirm-password field with an inline error message.
+            2. Show a `ProgressView` while submitting and disable the button.
+            3. Bonus: extract validation into a testable `SignUpValidator` struct.
             """
         ) {
             Form {
-                Section("Conta") {
+                Section("Account") {
                     TextField("Email", text: $email)
                         .textInputAutocapitalization(.never)
                         .keyboardType(.emailAddress)
                     if !email.isEmpty && !isEmailValid {
-                        Text("Email inválido").font(.caption).foregroundStyle(.red)
+                        Text("Invalid email").font(.caption).foregroundStyle(.red)
                     }
-                    SecureField("Senha (≥ 8)", text: $password)
+                    SecureField("Password (≥ 8)", text: $password)
                     if !password.isEmpty && !isPasswordValid {
-                        Text("Senha curta").font(.caption).foregroundStyle(.red)
+                        Text("Password too short").font(.caption).foregroundStyle(.red)
                     }
                 }
 
-                Section("Perfil") {
-                    Picker("Cargo", selection: $role) {
+                Section("Profile") {
+                    Picker("Role", selection: $role) {
                         ForEach(Role.allCases) { Text($0.rawValue).tag($0) }
                     }
                     VStack(alignment: .leading) {
-                        Text("Experiência: \(Int(experience)) anos")
+                        Text("Experience: \(Int(experience)) years")
                         Slider(value: $experience, in: 0...20, step: 1)
                     }
-                    Toggle("Aceito os termos", isOn: $acceptsTerms)
+                    Toggle("I accept the terms", isOn: $acceptsTerms)
                 }
 
                 Section {
-                    Button("Cadastrar") { /* TODO submit */ }
+                    Button("Sign up") { /* TODO: submit */ }
                         .disabled(!canSubmit)
                         .frame(maxWidth: .infinity)
                 }
