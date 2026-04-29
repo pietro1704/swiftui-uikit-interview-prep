@@ -1,0 +1,32 @@
+included:
+  - SwiftUIInterview
+  - SwiftUIInterviewTests
+
+excluded:
+  - .build
+  - DerivedData
+  - SwiftUIInterview.xcodeproj
+
+disabled_rules:
+  - trailing_whitespace
+  - trailing_comma
+  - line_length            # lessons intentionally long for didactic clarity
+  - file_length
+  - type_body_length
+  - function_body_length
+  - identifier_name        # `i`, `vm`, `ns` are fine in this codebase
+  - todo                   # exercises are TODOs by design
+  - nesting
+  - cyclomatic_complexity  # router switches are flat by nature
+  - opening_brace
+  - comma                  # tolerate spacing in didactic samples
+
+opt_in_rules:
+  - explicit_init
+  - first_where
+  - implicit_return
+  - prefer_self_type_over_type_of_self
+  - redundant_nil_coalescing
+  - sorted_first_last
+
+reporter: "xcode"

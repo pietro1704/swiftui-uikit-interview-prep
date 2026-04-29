@@ -23,6 +23,9 @@ enum LessonTopic: Hashable {
     case uikitAdvanced
     case swiftUIAdvanced
     case concurrencyAdvanced
+    case appLifecycle
+    case accessibility
+    case swiftDeepDive
 }
 
 struct ContentView: View {
@@ -41,6 +44,9 @@ struct ContentView: View {
         .init(id: 12, title: "12 — Advanced UIKit", summary: "Compositional, Diffable, custom UIControl", icon: "square.grid.3x3", topic: .uikitAdvanced),
         .init(id: 13, title: "13 — Advanced SwiftUI", summary: "PreferenceKey, GeometryReader, ViewModifier", icon: "puzzlepiece.extension", topic: .swiftUIAdvanced),
         .init(id: 14, title: "14 — Advanced Concurrency", summary: "TaskGroup, actor, AsyncStream", icon: "cpu", topic: .concurrencyAdvanced),
+        .init(id: 15, title: "15 — App Lifecycle", summary: "ScenePhase, AppDelegateAdaptor", icon: "app.badge", topic: .appLifecycle),
+        .init(id: 16, title: "16 — Accessibility", summary: "VoiceOver, Dynamic Type, Reduce Motion", icon: "figure.wave", topic: .accessibility),
+        .init(id: 17, title: "17 — Swift deep dive", summary: "Generics, opaque, result builders, wrappers", icon: "swift", topic: .swiftDeepDive),
     ]
 
     var body: some View {
@@ -86,6 +92,9 @@ struct ContentView: View {
         case .uikitAdvanced: Lesson12View()
         case .swiftUIAdvanced: Lesson13View()
         case .concurrencyAdvanced: Lesson14View()
+        case .appLifecycle: Lesson15View()
+        case .accessibility: Lesson16View()
+        case .swiftDeepDive: Lesson17View()
         }
     }
 }

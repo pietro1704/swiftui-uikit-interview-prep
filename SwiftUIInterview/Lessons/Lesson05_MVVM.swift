@@ -12,7 +12,7 @@ final class CounterViewModel {
     private(set) var count = 0
     private(set) var history: [Int] = []
 
-    var canDecrement: Bool { count > 0 }
+    var canDecrement: Bool { count != 0 }
 
     func increment() {
         count += 1
