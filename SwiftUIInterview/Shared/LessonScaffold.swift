@@ -18,7 +18,7 @@ struct LessonScaffold<Content: View>: View {
                 content
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Label("Exercício", systemImage: "pencil.and.outline")
+                    Label("Exercise", systemImage: "pencil.and.outline")
                         .font(.headline)
                     Text(exercise)
                         .font(.callout)

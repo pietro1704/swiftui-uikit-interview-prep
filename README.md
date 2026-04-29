@@ -1,42 +1,42 @@
 # 📱 SwiftUI + UIKit Interview Prep
 
-> App iOS interativo para estudar **SwiftUI**, **UIKit** e **Swift Concurrency** — do básico ao avançado — em formato de lições com exercícios.
+> An interactive iOS playground to study **SwiftUI**, **UIKit** and **Swift Concurrency** — from fundamentals to advanced — through bite-size lessons with hands-on exercises.
 
 [![Swift 5.9](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
 [![iOS 17+](https://img.shields.io/badge/iOS-17%2B-blue.svg)](https://developer.apple.com/ios/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Made with ❤️](https://img.shields.io/badge/Made%20with-%E2%9D%A4%EF%B8%8F-red.svg)](https://github.com/pietro1704)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/pietro1704/swiftui-uikit-interview-prep/pulls)
 
-Cada lição vive em uma tela do app: você lê o exemplo, brinca com o estado, e completa um **exercício TODO** comentado no código.
+Each lesson is a screen in the app: read the example, play with the live state, then complete the **TODO exercise** at the bottom of the file.
 
 ---
 
-## ✨ Conteúdo
+## ✨ Curriculum
 
-| #  | Lição | Tópico |
-|----|-------|--------|
-| 01 | `@State` & `@Binding` | Fluxo unidirecional, fonte da verdade |
-| 02 | `List` & `ForEach` | Identifiable, swipe actions, edição |
-| 03 | `NavigationStack` | Path programático, rotas tipadas |
-| 04 | Form & validação | TextField, Picker, computed validators |
-| 05 | `@Observable` + MVVM | Macro Observation (iOS 17+) |
-| 06 | async/await + URLSession | Idle/loading/loaded/failed |
-| 07 | Combine | Publishers, debounce em search |
-| 08 | Animações | withAnimation, matchedGeometryEffect |
+| #  | Lesson | Topics |
+|----|--------|--------|
+| 01 | `@State` & `@Binding` | Single source of truth, unidirectional flow |
+| 02 | `List` & `ForEach` | Identifiable, swipe actions, editing |
+| 03 | `NavigationStack` | Programmatic path, typed routes |
+| 04 | Form & validation | TextField, Picker, computed validators |
+| 05 | `@Observable` + MVVM | The new Observation macro (iOS 17+) |
+| 06 | async/await + URLSession | Idle / loading / loaded / failed states |
+| 07 | Combine | Publishers, debounced search |
+| 08 | Animations | `withAnimation`, `matchedGeometryEffect` |
 | 09 | SwiftData | `@Model`, `@Query`, `ModelContext` |
-| 10 | Testes | XCTest no ViewModel |
-| 11 | **Interop UIKit ↔ SwiftUI** | UIViewRepresentable, UIHostingController |
-| 12 | **UIKit avançado** | Compositional Layout, Diffable Data Source, Custom UIControl |
-| 13 | **SwiftUI avançado** | PreferenceKey, GeometryReader, ViewModifier, Environment custom |
-| 14 | **Concurrency avançada** | TaskGroup, actor, AsyncStream, MainActor |
+| 10 | Testing | XCTest on ViewModels |
+| 11 | **UIKit ↔ SwiftUI interop** | UIViewRepresentable, UIHostingController |
+| 12 | **Advanced UIKit** | Compositional Layout, Diffable Data Source, Custom UIControl |
+| 13 | **Advanced SwiftUI** | PreferenceKey, GeometryReader, custom ViewModifier, Environment |
+| 14 | **Advanced concurrency** | TaskGroup, actor, AsyncStream, MainActor, Sendable |
 
 ---
 
-## 🚀 Começando
+## 🚀 Getting started
 
-### Pré-requisitos
+### Requirements
 - macOS 14+
-- Xcode 15+ (testado em 26.3)
+- Xcode 15+
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`
 
 ### Setup
@@ -48,12 +48,12 @@ xcodegen generate
 open SwiftUIInterview.xcodeproj
 ```
 
-Pressione **▶️ Run** no Xcode (ou `Cmd+R`).
+Hit **▶️ Run** (or `⌘R`) in Xcode.
 
-### Rodar testes
+### Run tests
 
 ```bash
-# pelo Xcode: Cmd+U
+# In Xcode: ⌘U
 xcodebuild -project SwiftUIInterview.xcodeproj \
            -scheme SwiftUIInterview \
            -destination 'platform=iOS Simulator,name=iPhone 15' test
@@ -61,82 +61,92 @@ xcodebuild -project SwiftUIInterview.xcodeproj \
 
 ---
 
-## 📚 Como estudar
+## 📚 How to study
 
-1. **Abra a lição no app** → leia o cartão "Goal" no topo.
-2. **Mexa nos controles** para ver os efeitos do estado.
-3. **Abra o arquivo** correspondente em `SwiftUIInterview/Lessons/` no Xcode.
-4. **Complete o exercício TODO** descrito no cartão laranja.
-5. **Faça commit** da sua solução numa branch e abra PR pra você mesmo (treina fluxo de PR).
+1. **Open the lesson in the app** → read the goal at the top.
+2. **Interact with the controls** to feel the state changes.
+3. **Open the matching file** in `SwiftUIInterview/Lessons/` in Xcode.
+4. **Complete the TODO** described in the orange "Exercise" card.
+5. **Commit your solution** in a branch — practice the PR flow on yourself.
 
-> 💡 Veja a [Wiki](../../wiki) para o roteiro de estudo dia-a-dia + 50 perguntas comuns de entrevista iOS.
+> 💡 See the [`docs/`](docs/) folder for: a **4-day fast track for senior engineers**, **50 mock interview questions**, and cheat sheets for SwiftUI, UIKit and Concurrency.
 
 ---
 
-## 🏛 Arquitetura
+## 🏛 Architecture
 
 ```
 SwiftUIInterview/
 ├── App/
 │   ├── SwiftUIInterviewApp.swift   # @main, ModelContainer
-│   └── ContentView.swift            # NavigationStack + lista de lições
+│   └── ContentView.swift            # NavigationStack + lesson list
 ├── Lessons/
 │   ├── Lesson01_StateBinding.swift
 │   ├── Lesson02_Lists.swift
 │   ├── ...
 │   └── Lesson14_ConcurrencyAdvanced.swift
 ├── Shared/
-│   └── LessonScaffold.swift         # Template visual de cada lição
+│   └── LessonScaffold.swift         # Visual scaffold for each lesson
 └── Resources/
 
 SwiftUIInterviewTests/
 └── CounterViewModelTests.swift
+
+docs/
+├── Home.md
+├── Fast-Track-Senior.md
+├── Interview-Questions.md
+├── Cheat-Sheet-SwiftUI.md
+├── Cheat-Sheet-UIKit.md
+├── Cheat-Sheet-Concurrency.md
+├── Architecture-Patterns.md
+└── Common-Pitfalls.md
 ```
 
-**Padrão MVVM** com `@Observable` (iOS 17+).
-**Sem dependências externas** — só Apple frameworks.
+**MVVM** with the `@Observable` macro (iOS 17+).
+**Zero external dependencies** — pure Apple frameworks.
 
 ---
 
-## 🎯 Para entrevistas iOS
+## 🎯 Built for iOS interviews
 
-Tópicos cobertos cobrem ~90% do que costuma cair em entrevistas técnicas para vagas iOS Pleno/Sênior:
+The 14 lessons cover ~90% of what shows up in mid-level / senior iOS interviews:
 
 - ✅ State management (`@State`, `@Binding`, `@Observable`)
-- ✅ Navegação moderna (`NavigationStack`)
-- ✅ Concorrência estruturada (async/await, actors, TaskGroup)
-- ✅ Persistência (SwiftData)
-- ✅ Reativo (Combine)
-- ✅ Interop UIKit (Representable, HostingController, Coordinator)
-- ✅ UIKit avançado (Compositional, Diffable, Auto Layout)
-- ✅ Testes unitários
+- ✅ Modern navigation (`NavigationStack`)
+- ✅ Structured concurrency (async/await, actors, TaskGroup, AsyncStream)
+- ✅ Persistence (SwiftData)
+- ✅ Reactive (Combine)
+- ✅ UIKit interop (Representable, HostingController, Coordinator)
+- ✅ Advanced UIKit (Compositional, Diffable, Auto Layout)
+- ✅ Unit testing
 
 ---
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-PRs são muito bem-vindos! Especialmente:
-- Novas lições (Charts, MapKit avançado, WidgetKit, App Intents…)
-- Tradução para inglês/espanhol
-- Correções e melhorias didáticas
+PRs are very welcome — especially:
+- New lessons (Charts, MapKit, WidgetKit, App Intents…)
+- Translations (pt-BR, es-LA)
+- Didactic improvements
 
 ```bash
-git checkout -b feature/minha-licao
-# ... edite ...
-git commit -m "feat: add lesson X"
-git push origin feature/minha-licao
+git checkout -b feat/my-lesson
+# ... edit ...
+git commit -m "feat: add lesson on Charts"
+git push origin feat/my-lesson
 ```
 
 ---
 
-## 📄 Licença
+## 📄 License
 
-[MIT](LICENSE) — use, fork, modifique à vontade.
+[MIT](LICENSE) — fork it, ship it, learn it.
 
 ---
 
 <p align="center">
-  Feito com 🍎 para a comunidade iOS BR.
+  Made with 🍎 for the iOS community.
   <br>
   <a href="https://github.com/pietro1704">@pietro1704</a>
 </p>

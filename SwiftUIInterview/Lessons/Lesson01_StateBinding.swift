@@ -1,11 +1,11 @@
 import SwiftUI
 
-// MARK: - Lição 01 — @State e @Binding
+// MARK: - Lesson 01 — @State and @Binding
 //
-// Conceitos:
-// - @State: fonte da verdade local de uma View. Use para tipos `value` (struct/Int/Bool/String).
-// - @Binding: referência bidirecional para um @State pertencente a outra view.
-// - Fluxo: dados descem como Binding, eventos sobem por closures ou mutação via Binding.
+// Core ideas:
+// - @State: local source of truth for a View. Use for value types (struct/Int/Bool/String).
+// - @Binding: a bidirectional reference to a @State owned by another view.
+// - Data flow: pass data down as Binding, push events up via closures or via Binding mutation.
 
 struct Lesson01View: View {
     @State private var counter = 0
@@ -15,12 +15,12 @@ struct Lesson01View: View {
     var body: some View {
         LessonScaffold(
             title: "01 — @State / @Binding",
-            goal: "Entender o fluxo unidirecional e como compartilhar estado entre views.",
+            goal: "Understand unidirectional data flow and how to share state between views.",
             exercise: """
-            1. Crie uma subview `StepperRow` que recebe `@Binding var value: Int` \
-            e exibe + / − para incrementar.
-            2. Substitua os botões abaixo pela sua subview.
-            3. Adicione um botão "Reset" que zera todos os estados.
+            1. Create a `StepperRow` subview that takes `@Binding var value: Int` \
+            and shows + / − buttons.
+            2. Replace the buttons below with your subview.
+            3. Add a "Reset" button that zeroes every state value.
             """
         ) {
             GroupBox("Counter") {
@@ -33,17 +33,17 @@ struct Lesson01View: View {
             }
 
             GroupBox("Toggle (Binding)") {
-                ToggleRow(label: "Notificações", isOn: $isOn)
+                ToggleRow(label: "Notifications", isOn: $isOn)
             }
 
             GroupBox("TextField") {
-                TextField("Seu nome", text: $name)
+                TextField("Your name", text: $name)
                     .textFieldStyle(.roundedBorder)
-                Text(name.isEmpty ? "—" : "Olá, \(name)!")
+                Text(name.isEmpty ? "—" : "Hello, \(name)!")
                     .foregroundStyle(.secondary)
             }
 
-            // TODO (exercício): troque os botões do counter por StepperRow(value: $counter)
+            // TODO (exercise): replace the counter buttons with StepperRow(value: $counter)
             //
             // struct StepperRow: View {
             //     @Binding var value: Int

@@ -1,9 +1,9 @@
 import SwiftUI
 
-// MARK: - Lição 06 — async/await + URLSession
+// MARK: - Lesson 06 — async/await + URLSession
 //
-// `.task { }` cria uma Task atrelada ao lifecycle da view (cancela ao desaparecer).
-// `URLSession.data(from:)` é a API moderna que retorna `(Data, URLResponse)`.
+// `.task { }` creates a Task tied to the view's lifecycle (auto-cancels on disappear).
+// `URLSession.data(from:)` is the modern API returning `(Data, URLResponse)`.
 
 struct Post: Decodable, Identifiable {
     let id: Int
@@ -27,7 +27,7 @@ final class PostsViewModel {
             let posts = try JSONDecoder().decode([Post].self, from: data)
             state = .loaded(Array(posts.prefix(15)))
         } catch is CancellationError {
-            // task cancelada: não atualiza state
+            // task cancelled: don't update state
         } catch {
             state = .failed(error.localizedDescription)
         }
@@ -40,19 +40,19 @@ struct Lesson06View: View {
     var body: some View {
         LessonScaffold(
             title: "06 — async/await",
-            goal: "Buscar dados de API e modelar idle/loading/loaded/failed.",
+            goal: "Fetch data from an API and model idle/loading/loaded/failed.",
             exercise: """
-            1. Adicione pull-to-refresh com `.refreshable { await vm.load() }`.
-            2. Implemente `cancel()` que dispara `Task` e armazena handle p/ cancelar.
-            3. Bônus: paralelize 2 fetches usando `async let`.
+            1. Add pull-to-refresh with `.refreshable { await vm.load() }`.
+            2. Implement a `cancel()` that stores the Task handle so it can be cancelled.
+            3. Bonus: parallelize two fetches using `async let`.
             """
         ) {
             Group {
                 switch vm.state {
                 case .idle:
-                    Text("Toque em Carregar")
+                    Text("Tap Load")
                 case .loading:
-                    ProgressView("Carregando...")
+                    ProgressView("Loading...")
                 case .loaded(let posts):
                     VStack(spacing: 8) {
                         ForEach(posts) { p in
@@ -71,7 +71,7 @@ struct Lesson06View: View {
             }
             .frame(maxWidth: .infinity)
 
-            Button("Carregar") {
+            Button("Load") {
                 Task { await vm.load() }
             }
             .buttonStyle(.borderedProminent)

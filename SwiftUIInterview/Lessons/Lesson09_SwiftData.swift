@@ -1,10 +1,10 @@
 import SwiftUI
 import SwiftData
 
-// MARK: - Lição 09 — SwiftData
+// MARK: - Lesson 09 — SwiftData
 //
-// SwiftData (iOS 17+) é o sucessor declarativo do Core Data.
-// `@Model` marca uma classe como persistível, `@Query` faz fetch reativo na view.
+// SwiftData (iOS 17+) is the declarative successor to Core Data.
+// `@Model` marks a class as persistable; `@Query` does a reactive fetch in the view.
 
 @Model
 final class TaskItem {
@@ -27,15 +27,15 @@ struct Lesson09View: View {
     var body: some View {
         LessonScaffold(
             title: "09 — SwiftData",
-            goal: "Persistir dados localmente com @Model e @Query.",
+            goal: "Persist data locally with @Model and @Query.",
             exercise: """
-            1. Adicione filtro `@Query(filter: #Predicate { !$0.done })` para mostrar só pendentes.
-            2. Crie ordenação alternada por título / data via Picker.
-            3. Bônus: relacione `TaskItem` a uma `Category` (classe @Model).
+            1. Add a `@Query(filter: #Predicate { !$0.done })` to show only pending tasks.
+            2. Toggle ordering between title / date via a Picker.
+            3. Bonus: relate `TaskItem` to a `Category` (an `@Model` class).
             """
         ) {
             HStack {
-                TextField("Nova tarefa", text: $newTitle)
+                TextField("New task", text: $newTitle)
                     .textFieldStyle(.roundedBorder)
                 Button("Add") {
                     guard !newTitle.isEmpty else { return }
@@ -45,7 +45,7 @@ struct Lesson09View: View {
             }
 
             if tasks.isEmpty {
-                Text("Sem tarefas").foregroundStyle(.secondary)
+                Text("No tasks yet").foregroundStyle(.secondary)
             } else {
                 VStack(spacing: 6) {
                     ForEach(tasks) { task in
