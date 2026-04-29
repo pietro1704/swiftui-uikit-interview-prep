@@ -2,9 +2,15 @@ import SwiftUI
 
 // MARK: - Lesson 02 — List, ForEach, Identifiable
 //
-// - `List` builds reusable cells with native separators and swipe support.
-// - `Identifiable` lets ForEach skip verbose key paths.
-// - `.swipeActions` is the modern replacement for UIKit's edit actions.
+// `List` is a container that renders children as reusable cells with native
+// separators, swipe actions and selection — same idea as UITableView.
+//
+// Three flavors:
+//   1. Static rows:        List { Text("A"); Text("B") }
+//   2. Data-driven:        List(items) { item in Text(item.name) }
+//   3. With ForEach:       List { ForEach(items) { ... }.onDelete { ... } }
+//
+// Important: `.onDelete` and `.onMove` are modifiers of **ForEach**, not List.
 
 struct Fruit: Identifiable, Hashable {
     let id = UUID()
@@ -41,29 +47,63 @@ struct Lesson02View: View {
                 .buttonStyle(.borderedProminent)
             }
 
-            VStack(spacing: 0) {
+            // Real List with ForEach, .onDelete and .onMove.
+            // Tap the Edit button to enable reorder/delete mode.
+            List {
                 ForEach(fruits) { fruit in
                     HStack {
                         Text(fruit.emoji)
                         Text(fruit.name)
                         Spacer()
                     }
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 12)
                     .swipeActions {
                         Button(role: .destructive) {
                             fruits.removeAll { $0.id == fruit.id }
                         } label: { Label("Delete", systemImage: "trash") }
                     }
-                    Divider()
                 }
+                .onDelete { offsets in fruits.remove(atOffsets: offsets) }
+                .onMove   { src, dst in fruits.move(fromOffsets: src, toOffset: dst) }
             }
-            .background(.background)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.quaternary))
+            .frame(minHeight: 240)
+            .scrollContentBackground(.hidden)
+            .toolbar { EditButton() }
 
-            // TODO: replace the VStack+ForEach with a real `List` plus .onDelete and .onMove
-            // List { ForEach(fruits) { ... }.onDelete { fruits.remove(atOffsets: $0) } }
+            SolutionDisclosure(title: "Show solution (favorites + sections)") {
+                CodeBlock("""
+                struct Fruit: Identifiable, Hashable {
+                    let id = UUID()
+                    var name: String
+                    var emoji: String
+                    var favorite = false
+                }
+
+                List {
+                    let favs = fruits.filter(\\.favorite)
+                    let rest = fruits.filter { !$0.favorite }
+
+                    Section("Favorites") {
+                        ForEach(favs) { fruit in row(fruit) }
+                    }
+                    Section("All") {
+                        ForEach(rest) { fruit in row(fruit) }
+                    }
+                }
+
+                @ViewBuilder
+                func row(_ fruit: Fruit) -> some View {
+                    HStack { Text(fruit.emoji); Text(fruit.name) }
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                if let i = fruits.firstIndex(where: { $0.id == fruit.id }) {
+                                    fruits[i].favorite.toggle()
+                                }
+                            } label: { Label("Favorite", systemImage: "star") }
+                            .tint(.yellow)
+                        }
+                }
+                """)
+            }
         }
     }
 }

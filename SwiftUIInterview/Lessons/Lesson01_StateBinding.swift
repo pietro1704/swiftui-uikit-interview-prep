@@ -31,24 +31,63 @@ struct Lesson01View: View {
                 }
                 .buttonStyle(.bordered)
             }
-
+            
             GroupBox("Toggle (Binding)") {
                 ToggleRow(label: "Notifications", isOn: $isOn)
             }
-
+            
             GroupBox("TextField") {
                 TextField("Your name", text: $name)
                     .textFieldStyle(.roundedBorder)
                 Text(name.isEmpty ? "—" : "Hello, \(name)!")
                     .foregroundStyle(.secondary)
             }
+            
+            GroupBox("Text") {
+                StepperRow(value: $counter)
+            }
+            
+            Button {
+                counter = 0
+            } label: {
+                Text("reset")
+            }
 
-            // TODO (exercise): replace the counter buttons with StepperRow(value: $counter)
-            //
-            // struct StepperRow: View {
-            //     @Binding var value: Int
-            //     var body: some View { ... }
-            // }
+            SolutionDisclosure(title: "Show reference solution") {
+                CodeBlock("""
+                struct StepperRow: View {
+                    @Binding var value: Int
+                    var body: some View {
+                        HStack {
+                            Button("−") { value -= 1 }
+                            Text("\\(value)")
+                                .font(.title2).monospacedDigit()
+                                .frame(minWidth: 40)
+                            Button("+") { value += 1 }
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+
+                // Parent:
+                StepperRow(value: $counter)
+
+                Button("Reset all") {
+                    counter = 0; isOn = false; name = ""
+                }
+                """)
+            }
+        }
+    }
+    struct StepperRow: View {
+        @Binding var value: Int
+        var body: some View {
+            HStack {
+                Button("−") { value -= 1 }
+                Text("\(value)").font(.title2).monospacedDigit()
+                Button("+") { value += 1 }
+            }
+            .buttonStyle(.bordered)
         }
     }
 }

@@ -60,6 +60,26 @@ struct Lesson05View: View {
                     }
                 }
             }
+
+            SolutionDisclosure {
+                CodeBlock("""
+                // Add to CounterViewModel:
+                var canUndo: Bool { !history.isEmpty }
+
+                func undo() {
+                    guard history.popLast() != nil else { return }
+                    count = history.last ?? 0
+                }
+
+                // Test:
+                func test_undo_revertsLastChange() {
+                    let vm = CounterViewModel()
+                    vm.increment(); vm.increment()
+                    vm.undo()
+                    XCTAssertEqual(vm.count, 1)
+                }
+                """)
+            }
         }
     }
 }

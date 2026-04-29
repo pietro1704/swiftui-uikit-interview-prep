@@ -14,6 +14,7 @@
 		310F62BFB3DC3D5C293BAA69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157EBE94FDF5F5259244E9A /* ContentView.swift */; };
 		33CC20367C8FB6D63272D77D /* Lesson10_Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60E78F00B3F4A712C7AE2B9 /* Lesson10_Testing.swift */; };
 		384F9DCF378749B6D0CBE27C /* Lesson02_Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A253DD477A547911934A39D /* Lesson02_Lists.swift */; };
+		3EC3FA48568819FB886019AD /* SolutionDisclosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABACDE11048CFE1AC3CD424 /* SolutionDisclosure.swift */; };
 		519317B86056C207ECB9690F /* Lesson01_StateBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1344ED5F90EB49FAC6FBE1 /* Lesson01_StateBinding.swift */; };
 		5434FE6E3B3BF5DFEF57A2AC /* Lesson11_Interop.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BF6143782C4B664952E527 /* Lesson11_Interop.swift */; };
 		57F5BEC14848B49E0CDE5813 /* Lesson03_Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36D5C8671739FAC6076809A /* Lesson03_Navigation.swift */; };
@@ -51,6 +52,7 @@
 		1A253DD477A547911934A39D /* Lesson02_Lists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson02_Lists.swift; sourceTree = "<group>"; };
 		336F1D030B0E3E70391CAE4A /* Lesson04_Forms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson04_Forms.swift; sourceTree = "<group>"; };
 		3D2B4460FF0794C95BD81A42 /* LessonSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSnapshotTests.swift; sourceTree = "<group>"; };
+		5ABACDE11048CFE1AC3CD424 /* SolutionDisclosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionDisclosure.swift; sourceTree = "<group>"; };
 		5D9BC0B2990405D58C8659AF /* SwiftUIInterviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIInterviewApp.swift; sourceTree = "<group>"; };
 		5F0B2B0F6AD5AFFDC781BA5D /* Lesson14_ConcurrencyAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson14_ConcurrencyAdvanced.swift; sourceTree = "<group>"; };
 		65D0DE309AF5371D3CF706A1 /* Lesson12_UIKitAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson12_UIKitAdvanced.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				6D56B613E66C87A18E5771FD /* LessonScaffold.swift */,
+				5ABACDE11048CFE1AC3CD424 /* SolutionDisclosure.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				ED4F94564C4DF3A8E4CBD513 /* Lesson16_Accessibility.swift in Sources */,
 				91F5286B953398E1F2D64C69 /* Lesson17_SwiftDeepDive.swift in Sources */,
 				08BF95DFAD32CF3512ABDBC0 /* LessonScaffold.swift in Sources */,
+				3EC3FA48568819FB886019AD /* SolutionDisclosure.swift in Sources */,
 				75B8F13896D1946AD205F270 /* SwiftUIInterviewApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
