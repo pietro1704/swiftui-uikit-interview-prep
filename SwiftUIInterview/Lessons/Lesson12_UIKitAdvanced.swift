@@ -1,26 +1,26 @@
 import SwiftUI
 import UIKit
 
-// MARK: - Lição 12 — UIKit avançado (revisão p/ entrevista)
+// MARK: - Lesson 12 — Advanced UIKit (interview review)
 //
-// Tópicos cobertos:
+// Topics covered:
 //  - UIViewController lifecycle
-//  - Auto Layout programático com NSLayoutConstraint
+//  - Programmatic Auto Layout with NSLayoutConstraint
 //  - UICollectionView Compositional Layout + Diffable Data Source
-//  - Custom UIControl com sendActions
+//  - Custom UIControl using sendActions
 
 // =====================================================================
-// MARK: ViewController lifecycle (cheat sheet — útil pra perguntas teóricas)
+// MARK: ViewController lifecycle (cheat sheet — handy for theory questions)
 // =====================================================================
 //
-//   init(coder/nibName) → loadView → viewDidLoad (1 vez)
+//   init(coder/nibName) → loadView → viewDidLoad (once)
 //   viewWillAppear → viewIsAppearing (iOS 13+) → viewDidAppear
-//   viewWillLayoutSubviews → viewDidLayoutSubviews (a cada layout pass)
+//   viewWillLayoutSubviews → viewDidLayoutSubviews (each layout pass)
 //   viewWillDisappear → viewDidDisappear
-//   deinit (verifique retain cycles em closures: [weak self])
+//   deinit (watch for retain cycles in closures: [weak self])
 
 // =====================================================================
-// MARK: UICollectionView com Compositional + Diffable
+// MARK: UICollectionView with Compositional + Diffable
 // =====================================================================
 
 final class GridViewController: UIViewController {
@@ -168,7 +168,7 @@ struct Lesson12View: View {
 
     var body: some View {
         LessonScaffold(
-            title: "12 — UIKit avançado",
+            title: "12 — Advanced UIKit",
             goal: "Compositional Layout, Diffable Data Source, Auto Layout, Custom UIControl.",
             exercise: """
             1. Adicione header suplementar à compositional section (NSCollectionLayoutBoundarySupplementaryItem).

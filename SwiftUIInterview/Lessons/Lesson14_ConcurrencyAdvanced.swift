@@ -1,18 +1,18 @@
 import SwiftUI
 
-// MARK: - Lição 14 — Concurrency avançada
+// MARK: - Lesson 14 — Advanced concurrency
 //
-// Conceitos para entrevista sênior:
-//  - async let          → paralelismo simples
-//  - TaskGroup          → paralelismo dinâmico (n tasks)
-//  - actor              → isolamento de estado mutável
-//  - @MainActor         → garante execução na main thread (UI)
-//  - AsyncStream        → ponte de callbacks → AsyncSequence
-//  - Cancelamento       → Task.checkCancellation() / try Task.sleep cancela sozinho
-//  - Sendable           → tipos seguros para cruzar isolamentos
+// Senior-level interview concepts:
+//  - async let          → simple parallelism
+//  - TaskGroup          → dynamic parallelism (n tasks)
+//  - actor              → isolated mutable state
+//  - @MainActor         → forces execution on the main thread (UI)
+//  - AsyncStream        → bridge from callbacks → AsyncSequence
+//  - Cancellation       → Task.checkCancellation() / try Task.sleep cancels itself
+//  - Sendable           → types safe to cross isolation boundaries
 
 // =====================================================================
-// MARK: Actor — isolamento de estado
+// MARK: Actor — isolated state
 // =====================================================================
 actor ImageCache {
     private var storage: [URL: Data] = [:]
@@ -25,7 +25,7 @@ actor ImageCache {
 }
 
 // =====================================================================
-// MARK: Repository com async let + TaskGroup
+// MARK: Repository with async let + TaskGroup
 // =====================================================================
 struct Repo: Decodable, Identifiable, Sendable {
     let id: Int
@@ -44,7 +44,7 @@ final class ConcurrencyVM {
     private let cache = ImageCache()
     private var streamTask: Task<Void, Never>?
 
-    // 1) Sequencial vs paralelo via async let
+    // 1) Serial vs parallel via async let
     func runComparison() async {
         isRunning = true
         defer { isRunning = false }
@@ -52,14 +52,14 @@ final class ConcurrencyVM {
         serial.removeAll()
         parallel.removeAll()
 
-        // sequencial
+        // serial
         let s0 = Date()
         let a = await fakeFetch(label: "A", ms: 600)
         let b = await fakeFetch(label: "B", ms: 600)
         let c = await fakeFetch(label: "C", ms: 600)
         serial = [a, b, c, "⏱ \(Int(Date().timeIntervalSince(s0)*1000))ms"]
 
-        // paralelo
+        // parallel
         let p0 = Date()
         async let pa = fakeFetch(label: "A", ms: 600)
         async let pb = fakeFetch(label: "B", ms: 600)
@@ -68,7 +68,7 @@ final class ConcurrencyVM {
         parallel = results + ["⏱ \(Int(Date().timeIntervalSince(p0)*1000))ms"]
     }
 
-    // 2) TaskGroup: nº dinâmico de tasks
+    // 2) TaskGroup: dynamic number of tasks
     func runGroup(count: Int) async -> [String] {
         await withTaskGroup(of: String.self) { group in
             for i in 1...count {
@@ -80,7 +80,7 @@ final class ConcurrencyVM {
         }
     }
 
-    // 3) AsyncStream: ponte timer → consumer
+    // 3) AsyncStream: timer → consumer bridge
     func startStream() {
         streamTicks.removeAll()
         streamTask?.cancel()
@@ -103,7 +103,7 @@ final class ConcurrencyVM {
     }
     func stopStream() { streamTask?.cancel() }
 
-    // 4) Actor — concorrência segura
+    // 4) Actor — race-free concurrency
     func hammerCache() async {
         await withTaskGroup(of: Void.self) { group in
             for i in 0..<20 {
@@ -133,25 +133,25 @@ struct Lesson14View: View {
 
     var body: some View {
         LessonScaffold(
-            title: "14 — Concurrency avançada",
-            goal: "async let, TaskGroup, actor, MainActor, AsyncStream, cancelamento.",
+            title: "14 — Advanced concurrency",
+            goal: "async let, TaskGroup, actor, MainActor, AsyncStream, cancellation.",
             exercise: """
             1. Adicione `Task.checkCancellation()` dentro do TaskGroup e teste cancelar mid-run.
             2. Converta `ImageCache` para usar `NSCache` por baixo (mantendo actor).
             3. Bônus: use `withThrowingTaskGroup` com fail-fast (cancela demais ao primeiro erro).
             """
         ) {
-            GroupBox("async let — sequencial vs paralelo") {
-                Button("Rodar comparação") { Task { await vm.runComparison() } }
+            GroupBox("async let — serial vs parallel") {
+                Button("Run comparison") { Task { await vm.runComparison() } }
                     .buttonStyle(.borderedProminent)
                     .disabled(vm.isRunning)
                 if vm.isRunning { ProgressView() }
-                Text("Sequencial: \(vm.serial.joined(separator: " · "))").font(.footnote)
-                Text("Paralelo:   \(vm.parallel.joined(separator: " · "))").font(.footnote)
+                Text("Serial:   \(vm.serial.joined(separator: " · "))").font(.footnote)
+                Text("Parallel: \(vm.parallel.joined(separator: " · "))").font(.footnote)
             }
 
-            GroupBox("TaskGroup (dinâmico)") {
-                Button("Disparar 8 tasks") {
+            GroupBox("TaskGroup (dynamic)") {
+                Button("Spawn 8 tasks") {
                     Task { groupOutput = await vm.runGroup(count: 8) }
                 }
                 .buttonStyle(.bordered)
@@ -167,9 +167,9 @@ struct Lesson14View: View {
             }
 
             GroupBox("Actor (race-free)") {
-                Button("20 writes concorrentes") { Task { await vm.hammerCache() } }
+                Button("20 concurrent writes") { Task { await vm.hammerCache() } }
                     .buttonStyle(.bordered)
-                Text("Itens no cache: \(vm.cacheCount)").font(.footnote)
+                Text("Items in cache: \(vm.cacheCount)").font(.footnote)
             }
         }
     }
