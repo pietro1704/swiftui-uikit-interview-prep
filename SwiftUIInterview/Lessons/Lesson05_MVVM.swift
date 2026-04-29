@@ -13,6 +13,7 @@ final class CounterViewModel {
     private(set) var history: [Int] = []
 
     var canDecrement: Bool { count != 0 }
+    var canUndo: Bool { !history.isEmpty }
 
     func increment() {
         count += 1
@@ -22,6 +23,11 @@ final class CounterViewModel {
         guard canDecrement else { return }
         count -= 1
         history.append(count)
+    }
+    // Exercise 1 solution
+    func undo() {
+        guard let _ = history.popLast() else { return }
+        count = history.last ?? 0
     }
     func reset() {
         count = 0

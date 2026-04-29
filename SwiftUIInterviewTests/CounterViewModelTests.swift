@@ -23,5 +23,29 @@ final class CounterViewModelTests: XCTestCase {
         XCTAssertTrue(vm.history.isEmpty)
     }
 
-    // TODO Exercise: complete with the additional scenarios listed in Lesson10.
+    // Exercise solutions:
+
+    func test_decrement_doesNotGoNegative() {
+        let vm = CounterViewModel()
+        vm.decrement()
+        XCTAssertEqual(vm.count, 0)
+        XCTAssertTrue(vm.history.isEmpty)
+    }
+
+    func test_history_after3IncrementsAnd1Decrement() {
+        let vm = CounterViewModel()
+        vm.increment(); vm.increment(); vm.increment()
+        vm.decrement()
+        XCTAssertEqual(vm.count, 2)
+        XCTAssertEqual(vm.history, [1, 2, 3, 2])
+    }
+
+    func test_undo_revertsLastChange() {
+        let vm = CounterViewModel()
+        vm.increment(); vm.increment()  // count = 2
+        vm.undo()
+        XCTAssertEqual(vm.count, 1)
+        vm.undo()
+        XCTAssertEqual(vm.count, 0)
+    }
 }
