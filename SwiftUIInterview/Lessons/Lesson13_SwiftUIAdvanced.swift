@@ -1,14 +1,14 @@
 import SwiftUI
 
-// MARK: - Lição 13 — SwiftUI avançado
+// MARK: - Lesson 13 — Advanced SwiftUI
 //
-// Quatro pilares de SwiftUI avançado para entrevista:
-//  1. PreferenceKey       — filhos enviam dados ao pai (oposto do Environment)
-//  2. GeometryReader      — leitura de tamanho/posição
-//  3. ViewModifier custom — encapsular estilo reutilizável
-//  4. EnvironmentValues   — DI implícita via árvore de views
+// Four pillars of advanced SwiftUI for interviews:
+//  1. PreferenceKey         — children push data up to ancestors (opposite of Environment)
+//  2. GeometryReader        — read size/position
+//  3. Custom ViewModifier   — encapsulate reusable styling
+//  4. EnvironmentValues     — implicit DI through the view tree
 
-// 1) PreferenceKey: cada item informa sua altura ao pai
+// 1) PreferenceKey: each item reports its own height to the parent
 struct HeightPref: PreferenceKey {
     static var defaultValue: CGFloat = 0
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
@@ -16,7 +16,7 @@ struct HeightPref: PreferenceKey {
     }
 }
 
-// 2) ViewModifier custom
+// 2) Custom ViewModifier
 struct CardStyle: ViewModifier {
     var tint: Color = .blue
     func body(content: Content) -> some View {
@@ -30,7 +30,7 @@ extension View {
     func card(tint: Color = .blue) -> some View { modifier(CardStyle(tint: tint)) }
 }
 
-// 3) EnvironmentValues custom
+// 3) Custom EnvironmentValues
 private struct ThemeKey: EnvironmentKey {
     static let defaultValue: Color = .blue
 }
@@ -41,7 +41,7 @@ extension EnvironmentValues {
     }
 }
 
-// 4) ViewBuilder em função
+// 4) ViewBuilder as a free function
 @ViewBuilder
 private func statusBadge(_ text: String, ok: Bool) -> some View {
     if ok {
@@ -56,7 +56,7 @@ struct Lesson13View: View {
 
     var body: some View {
         LessonScaffold(
-            title: "13 — SwiftUI avançado",
+            title: "13 — Advanced SwiftUI",
             goal: "PreferenceKey, GeometryReader, ViewModifier, Environment custom, ViewBuilder.",
             exercise: """
             1. Crie um `AnchorPreferenceKey` para desenhar uma linha ligando 2 views.

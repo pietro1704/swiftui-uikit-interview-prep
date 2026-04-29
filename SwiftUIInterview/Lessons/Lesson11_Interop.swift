@@ -2,17 +2,17 @@ import SwiftUI
 import UIKit
 import MapKit
 
-// MARK: - Lição 11 — Interop UIKit ↔ SwiftUI
+// MARK: - Lesson 11 — UIKit ↔ SwiftUI Interop
 //
-// Três pontes principais:
-//  1. UIViewRepresentable      → embute uma UIView em SwiftUI
-//  2. UIViewControllerRepresentable → embute um UIViewController
-//  3. UIHostingController      → embute SwiftUI View dentro de UIKit
+// Three main bridges:
+//  1. UIViewRepresentable             → embed a UIView inside SwiftUI
+//  2. UIViewControllerRepresentable   → embed a UIViewController inside SwiftUI
+//  3. UIHostingController             → embed a SwiftUI View inside UIKit
 //
-// Coordinator é o pedaço que recebe delegates UIKit (UITextField, MKMapView etc.)
-// e os traduz para callbacks SwiftUI.
+// The Coordinator is the piece that receives UIKit delegate callbacks
+// (UITextField, MKMapView, etc.) and forwards them to SwiftUI.
 
-// 1) UIView → SwiftUI: UITextField com toolbar (recurso só do UIKit)
+// 1) UIView → SwiftUI: UITextField with toolbar (UIKit-only feature)
 struct UIKitTextField: UIViewRepresentable {
     @Binding var text: String
     var placeholder: String = ""
@@ -63,7 +63,7 @@ struct MapView: UIViewRepresentable {
     func updateUIView(_ uiView: MKMapView, context: Context) {}
 }
 
-// 3) SwiftUI dentro de UIKit (demo conceitual — não roda na view, só para referência)
+// 3) SwiftUI inside UIKit (conceptual demo — not rendered, kept for reference)
 //
 // final class LegacyVC: UIViewController {
 //     override func viewDidLoad() {
