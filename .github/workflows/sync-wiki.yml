@@ -1,0 +1,30 @@
+name: Sync Wiki
+
+# Mirrors `docs/` into the GitHub Wiki on every push to `main` that touches docs/.
+# Note: the wiki must be seeded once manually (see scripts/sync-wiki.sh).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/sync-wiki.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Sync docs/ to wiki
+        uses: Andrew-Chen-Wang/github-wiki-action@v4
+        with:
+          path: docs
+          repository: ${{ github.repository }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true   # wiki may not be seeded yet

@@ -29,6 +29,9 @@ Each lesson is a screen in the app: read the example, play with the live state, 
 | 12 | **Advanced UIKit** | Compositional Layout, Diffable Data Source, Custom UIControl |
 | 13 | **Advanced SwiftUI** | PreferenceKey, GeometryReader, custom ViewModifier, Environment |
 | 14 | **Advanced concurrency** | TaskGroup, actor, AsyncStream, MainActor, Sendable |
+| 15 | **App Lifecycle** | ScenePhase, UIApplicationDelegateAdaptor |
+| 16 | **Accessibility** | VoiceOver, Dynamic Type, Reduce Motion, adjustable trait |
+| 17 | **Swift deep dive** | Generics + PAT, `some` vs `any`, result builders, custom property wrappers |
 
 ---
 
@@ -69,7 +72,9 @@ xcodebuild -project SwiftUIInterview.xcodeproj \
 4. **Complete the TODO** described in the orange "Exercise" card.
 5. **Commit your solution** in a branch — practice the PR flow on yourself.
 
-> 💡 See the [`docs/`](docs/) folder for: a **4-day fast track for senior engineers**, **50 mock interview questions**, and cheat sheets for SwiftUI, UIKit and Concurrency.
+> 💡 See the [`docs/`](docs/) folder for: a **4-day fast track for senior engineers**, **50 mock interview questions**, and cheat sheets for SwiftUI, UIKit and Concurrency. Same content lives in the [Wiki](../../wiki).
+>
+> 🔑 Stuck? The [`solutions`](https://github.com/pietro1704/swiftui-uikit-interview-prep/tree/solutions) branch has worked answers for selected exercises.
 
 ---
 
@@ -104,7 +109,9 @@ docs/
 ```
 
 **MVVM** with the `@Observable` macro (iOS 17+).
-**Zero external dependencies** — pure Apple frameworks.
+**One dev dependency** ([swift-snapshot-testing](https://github.com/pointfreeco/swift-snapshot-testing)) used only by the test target.
+
+Tooling included: **SwiftLint** with a [pre-commit hook](.githooks/pre-commit), GitHub Actions **CI** running build + test + lint, and a [wiki sync workflow](.github/workflows/sync-wiki.yml).
 
 ---
 
