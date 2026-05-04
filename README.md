@@ -53,6 +53,19 @@ open SwiftUIInterview.xcodeproj
 
 Hit **▶️ Run** (or `⌘R`) in Xcode.
 
+### Lighter alternative — Swift Playground variant
+
+If your Mac is RAM-constrained, or you'd rather study on iPad, open the
+SwiftPM-backed app playground instead:
+
+```bash
+open Playground/InterviewPrep.swiftpm
+```
+
+It mirrors all 17 lessons + the senior mock-interview quiz, just without
+hot-reload (Inject) and without XCTest. See `Playground/InterviewPrep.swiftpm/README.md`
+for details.
+
 ### Run tests
 
 ```bash

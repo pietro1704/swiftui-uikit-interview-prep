@@ -9,6 +9,7 @@ struct Lesson: Identifiable, Hashable {
 }
 
 enum LessonTopic: Hashable {
+    case mockInterview
     case stateBinding
     case lists
     case navigation
@@ -30,6 +31,7 @@ enum LessonTopic: Hashable {
 
 struct ContentView: View {
     let lessons: [Lesson] = [
+        .init(id: 0, title: "★ Senior Mock Interview", summary: "20-question quiz · concurrency, SwiftUI, architecture, Swift", icon: "person.fill.questionmark", topic: .mockInterview),
         .init(id: 1, title: "01 — @State & @Binding", summary: "Local state and unidirectional flow", icon: "switch.2", topic: .stateBinding),
         .init(id: 2, title: "02 — List & ForEach", summary: "Dynamic lists, swipe actions", icon: "list.bullet.rectangle", topic: .lists),
         .init(id: 3, title: "03 — NavigationStack", summary: "Programmatic-path navigation", icon: "arrow.forward.circle", topic: .navigation),
@@ -95,6 +97,7 @@ struct ContentView: View {
     @ViewBuilder
     private func lessonView(for topic: LessonTopic) -> some View {
         switch topic {
+        case .mockInterview: MockInterviewView()
         case .stateBinding: Lesson01View()
         case .lists:        Lesson02View()
         case .navigation:   Lesson03View(path: $navPath)

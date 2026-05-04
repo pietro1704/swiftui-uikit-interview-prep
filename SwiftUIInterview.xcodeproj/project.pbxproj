@@ -10,7 +10,9 @@
 		08BF95DFAD32CF3512ABDBC0 /* LessonScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56B613E66C87A18E5771FD /* LessonScaffold.swift */; };
 		08E862FCBD0BA92D5D8B26FB /* Lesson14_ConcurrencyAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2B0F6AD5AFFDC781BA5D /* Lesson14_ConcurrencyAdvanced.swift */; };
 		0C1F7CBDDD3B46D86F73D4F0 /* Lesson06_AsyncAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC719AA01EC8937811DAA8C0 /* Lesson06_AsyncAwait.swift */; };
+		16BF28D3D2253D2FE71F96AE /* MockInterviewResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC691961BB906AE4E85F6FD6 /* MockInterviewResultView.swift */; };
 		2FBCA2250891F09FFBFDC221 /* Lesson08_Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E7F843F8C24088ED30E94F /* Lesson08_Animations.swift */; };
+		2FDB9BAACE3AB261E425D846 /* MockInterviewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408CE8CD9616D912E4DE14B5 /* MockInterviewState.swift */; };
 		310F62BFB3DC3D5C293BAA69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157EBE94FDF5F5259244E9A /* ContentView.swift */; };
 		33CC20367C8FB6D63272D77D /* Lesson10_Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60E78F00B3F4A712C7AE2B9 /* Lesson10_Testing.swift */; };
 		384F9DCF378749B6D0CBE27C /* Lesson02_Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A253DD477A547911934A39D /* Lesson02_Lists.swift */; };
@@ -23,6 +25,7 @@
 		5B369CE0D0EB9A8462C99620 /* Lesson05_MVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCD8622FEC9D6CCE7B41C4B /* Lesson05_MVVM.swift */; };
 		75B8F13896D1946AD205F270 /* SwiftUIInterviewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BC0B2990405D58C8659AF /* SwiftUIInterviewApp.swift */; };
 		91F5286B953398E1F2D64C69 /* Lesson17_SwiftDeepDive.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA36E9B8E89C188162F47200 /* Lesson17_SwiftDeepDive.swift */; };
+		9C0EEF4E4351523AD9B1B61E /* MockInterviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1CB676EC8BBBC3A9C55DC0 /* MockInterviewView.swift */; };
 		9F7D894992DB756F1AB05D7E /* CounterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093FAF93BBE4FBEEC69D5A09 /* CounterViewModelTests.swift */; };
 		AB6F871B3C95FDEE9806A36F /* LessonSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2B4460FF0794C95BD81A42 /* LessonSnapshotTests.swift */; };
 		B1AEB2314EA900BEEF081AEC /* Lesson07_Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D423174B4E5934669613AD82 /* Lesson07_Combine.swift */; };
@@ -32,6 +35,7 @@
 		DC88FFF5599EE3A7AE8185D3 /* Lesson12_UIKitAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0DE309AF5371D3CF706A1 /* Lesson12_UIKitAdvanced.swift */; };
 		ED4F94564C4DF3A8E4CBD513 /* Lesson16_Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A5A11A34401E2DA0C824F2 /* Lesson16_Accessibility.swift */; };
 		F0A3E8B99F16F0C6975F2F65 /* Lesson15_AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13695B06B0F58A04870105BA /* Lesson15_AppLifecycle.swift */; };
+		F0F1F41DBCAB4F2B86209937 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86226850A73DDC2B8DBBF85 /* QuestionModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,8 @@
 		1A253DD477A547911934A39D /* Lesson02_Lists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson02_Lists.swift; sourceTree = "<group>"; };
 		336F1D030B0E3E70391CAE4A /* Lesson04_Forms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson04_Forms.swift; sourceTree = "<group>"; };
 		3D2B4460FF0794C95BD81A42 /* LessonSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSnapshotTests.swift; sourceTree = "<group>"; };
+		408CE8CD9616D912E4DE14B5 /* MockInterviewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInterviewState.swift; sourceTree = "<group>"; };
+		4D1CB676EC8BBBC3A9C55DC0 /* MockInterviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInterviewView.swift; sourceTree = "<group>"; };
 		5ABACDE11048CFE1AC3CD424 /* SolutionDisclosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionDisclosure.swift; sourceTree = "<group>"; };
 		5D9BC0B2990405D58C8659AF /* SwiftUIInterviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIInterviewApp.swift; sourceTree = "<group>"; };
 		5F0B2B0F6AD5AFFDC781BA5D /* Lesson14_ConcurrencyAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson14_ConcurrencyAdvanced.swift; sourceTree = "<group>"; };
@@ -70,6 +76,8 @@
 		D423174B4E5934669613AD82 /* Lesson07_Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson07_Combine.swift; sourceTree = "<group>"; };
 		DD1344ED5F90EB49FAC6FBE1 /* Lesson01_StateBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson01_StateBinding.swift; sourceTree = "<group>"; };
 		E43E9CEA35119C88C77C2550 /* SwiftUIInterviewTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SwiftUIInterviewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E86226850A73DDC2B8DBBF85 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
+		FC691961BB906AE4E85F6FD6 /* MockInterviewResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInterviewResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,7 @@
 			children = (
 				026BC76D53D8D6CD36D1389F /* App */,
 				57C9EA8E2CE62BED2101D760 /* Lessons */,
+				ACF3151759FB564B7E93AAB3 /* MockInterview */,
 				DBDB627246CD376C373219A5 /* Shared */,
 			);
 			path = SwiftUIInterview;
@@ -160,6 +169,17 @@
 				AB281E3845A79A152918CE4E /* SwiftUIInterviewTests */,
 				092A7429E123E8E18F34EBDD /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		ACF3151759FB564B7E93AAB3 /* MockInterview */ = {
+			isa = PBXGroup;
+			children = (
+				FC691961BB906AE4E85F6FD6 /* MockInterviewResultView.swift */,
+				408CE8CD9616D912E4DE14B5 /* MockInterviewState.swift */,
+				4D1CB676EC8BBBC3A9C55DC0 /* MockInterviewView.swift */,
+				E86226850A73DDC2B8DBBF85 /* QuestionModel.swift */,
+			);
+			path = MockInterview;
 			sourceTree = "<group>";
 		};
 		DBDB627246CD376C373219A5 /* Shared */ = {
@@ -289,6 +309,10 @@
 				ED4F94564C4DF3A8E4CBD513 /* Lesson16_Accessibility.swift in Sources */,
 				91F5286B953398E1F2D64C69 /* Lesson17_SwiftDeepDive.swift in Sources */,
 				08BF95DFAD32CF3512ABDBC0 /* LessonScaffold.swift in Sources */,
+				16BF28D3D2253D2FE71F96AE /* MockInterviewResultView.swift in Sources */,
+				2FDB9BAACE3AB261E425D846 /* MockInterviewState.swift in Sources */,
+				9C0EEF4E4351523AD9B1B61E /* MockInterviewView.swift in Sources */,
+				F0F1F41DBCAB4F2B86209937 /* QuestionModel.swift in Sources */,
 				3EC3FA48568819FB886019AD /* SolutionDisclosure.swift in Sources */,
 				75B8F13896D1946AD205F270 /* SwiftUIInterviewApp.swift in Sources */,
 			);

@@ -6,6 +6,10 @@ excluded:
   - .build
   - DerivedData
   - SwiftUIInterview.xcodeproj
+  - Playground
+  # Vendored Inject/HotSwiftUI fallback code — third-party, not ours to format
+  - SwiftUIInterview/App/SwiftUIInterviewApp.swift
+  - SwiftUIInterview/Lessons/Lesson15_AppLifecycle.swift
 
 disabled_rules:
   - trailing_whitespace

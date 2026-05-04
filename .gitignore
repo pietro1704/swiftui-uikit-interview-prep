@@ -13,7 +13,9 @@ DerivedData/
 Packages/
 Package.pins
 Package.resolved
-.swiftpm/
+# Ignore SwiftPM workspace metadata, but NOT the Playground/.swiftpm app project
+**/.swiftpm/xcode/
+**/.swiftpm/configuration/
 
 # CocoaPods
 Pods/
@@ -32,6 +34,7 @@ fastlane/test_output
 # IDE
 .vscode/
 .idea/
+.claude/
 
 # xcode-build-server
 buildServer.json
