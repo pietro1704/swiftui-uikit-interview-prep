@@ -51,7 +51,19 @@ xcodegen generate
 open SwiftUIInterview.xcodeproj
 ```
 
-Hit **▶️ Run** (or `⌘R`) in Xcode.
+Hit **▶️ Run** (or `⌘R`) in Xcode. Pick **iOS Simulator** for the
+phone/tablet experience, or **My Mac (Mac Catalyst)** to run the app
+natively on macOS — same code, same UI, no simulator needed (lighter
+on RAM-constrained machines).
+
+### Livecoding playground (Xcode tradicional)
+
+Six pages of senior-iOS livecoding drills (SwiftUI, async/await, generics,
+ARC, classic algorithms) with TODO scaffolds and reference solutions:
+
+```bash
+open Playground/Livecoding.playground
+```
 
 ### Lighter alternative — Swift Playground variant
 
