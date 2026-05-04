@@ -68,7 +68,12 @@ struct Lesson04View: View {
             }
             .frame(minHeight: 520)
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson04View() } }

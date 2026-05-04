@@ -39,7 +39,12 @@ struct SolutionDisclosure<Content: View>: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(.green.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
         .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(.green.opacity(0.4)))
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 /// Presents a code snippet with monospaced styling.
@@ -57,5 +62,10 @@ struct CodeBlock: View {
         }
         .background(Color.black.opacity(0.85), in: RoundedRectangle(cornerRadius: 8))
         .foregroundStyle(.white)
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }

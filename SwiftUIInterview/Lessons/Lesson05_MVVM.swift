@@ -81,7 +81,12 @@ struct Lesson05View: View {
                 """)
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson05View() } }

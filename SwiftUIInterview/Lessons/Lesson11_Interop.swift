@@ -107,7 +107,12 @@ struct Lesson11View: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson11View() } }

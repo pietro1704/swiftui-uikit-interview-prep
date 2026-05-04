@@ -77,7 +77,12 @@ struct Lesson06View: View {
             .buttonStyle(.borderedProminent)
         }
         .task { await vm.load() }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson06View() } }

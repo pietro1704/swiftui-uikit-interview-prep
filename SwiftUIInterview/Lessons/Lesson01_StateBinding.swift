@@ -78,7 +78,12 @@ struct Lesson01View: View {
                 """)
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
     struct StepperRow: View {
         @Binding var value: Int
         var body: some View {
@@ -88,7 +93,12 @@ struct Lesson01View: View {
                 Button("+") { value += 1 }
             }
             .buttonStyle(.bordered)
+            .enableInjection()
         }
+
+        #if DEBUG
+        @ObserveInjection var forceRedraw
+        #endif
     }
 }
 
@@ -98,7 +108,12 @@ private struct ToggleRow: View {
 
     var body: some View {
         Toggle(label, isOn: $isOn)
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson01View() } }

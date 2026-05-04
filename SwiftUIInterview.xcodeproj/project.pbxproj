@@ -14,6 +14,7 @@
 		310F62BFB3DC3D5C293BAA69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157EBE94FDF5F5259244E9A /* ContentView.swift */; };
 		33CC20367C8FB6D63272D77D /* Lesson10_Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60E78F00B3F4A712C7AE2B9 /* Lesson10_Testing.swift */; };
 		384F9DCF378749B6D0CBE27C /* Lesson02_Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A253DD477A547911934A39D /* Lesson02_Lists.swift */; };
+		3EA4C31CF952A8E831B9A207 /* Inject in Frameworks */ = {isa = PBXBuildFile; productRef = 4975F651362D6C9CD63A8FA5 /* Inject */; };
 		3EC3FA48568819FB886019AD /* SolutionDisclosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABACDE11048CFE1AC3CD424 /* SolutionDisclosure.swift */; };
 		519317B86056C207ECB9690F /* Lesson01_StateBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1344ED5F90EB49FAC6FBE1 /* Lesson01_StateBinding.swift */; };
 		5434FE6E3B3BF5DFEF57A2AC /* Lesson11_Interop.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7BF6143782C4B664952E527 /* Lesson11_Interop.swift */; };
@@ -72,6 +73,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		43785094DDA726D91BF670F4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3EA4C31CF952A8E831B9A207 /* Inject in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AFF9C63EE2C6E44937A98259 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -170,6 +179,7 @@
 			buildConfigurationList = A69139E462A3A6ADECE5FEA2 /* Build configuration list for PBXNativeTarget "SwiftUIInterview" */;
 			buildPhases = (
 				D53C3970380179FA84F2E4D6 /* Sources */,
+				43785094DDA726D91BF670F4 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -177,6 +187,7 @@
 			);
 			name = SwiftUIInterview;
 			packageProductDependencies = (
+				4975F651362D6C9CD63A8FA5 /* Inject */,
 			);
 			productName = SwiftUIInterview;
 			productReference = B0D9E08CBA352FAC4465B1E7 /* SwiftUIInterview.app */;
@@ -231,6 +242,7 @@
 			mainGroup = ACBC32798A27BCEB0B71100A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				60423194C86ED2FBFD47052F /* XCRemoteSwiftPackageReference "Inject" */,
 				0FC784A8F3968D6A5D36B8CE /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -417,6 +429,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMIT_FRONTEND_COMMAND_LINES = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -424,6 +437,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "$(inherited) -Xlinker -interposable";
 				PRODUCT_BUNDLE_IDENTIFIER = com.pietro.SwiftUIInterview;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -531,9 +545,22 @@
 				minimumVersion = 1.17.0;
 			};
 		};
+		60423194C86ED2FBFD47052F /* XCRemoteSwiftPackageReference "Inject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Inject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4975F651362D6C9CD63A8FA5 /* Inject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60423194C86ED2FBFD47052F /* XCRemoteSwiftPackageReference "Inject" */;
+			productName = Inject;
+		};
 		8E9F70B039FFA35CC57FE1B3 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0FC784A8F3968D6A5D36B8CE /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;

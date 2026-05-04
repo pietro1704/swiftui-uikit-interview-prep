@@ -184,7 +184,12 @@ struct Lesson12View: View {
                 RatingControlWrapper(rating: $rating).frame(height: 44)
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson12View() } }

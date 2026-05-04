@@ -49,8 +49,10 @@ struct ContentView: View {
         .init(id: 17, title: "17 — Swift deep dive", summary: "Generics, opaque, result builders, wrappers", icon: "swift", topic: .swiftDeepDive),
     ]
 
+    @State private var navPath = NavigationPath()
+
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navPath) {
             List(lessons) { lesson in
                 NavigationLink(value: lesson.topic) {
                     HStack(spacing: 14) {
@@ -72,15 +74,30 @@ struct ContentView: View {
             .navigationDestination(for: LessonTopic.self) { topic in
                 lessonView(for: topic)
             }
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .detail(let id):
+                    Lesson03DetailView(id: id, path: $navPath)
+                case .profile(let name):
+                    Text("Profile: \(name)").font(.title)
+                case .root:
+                    Lesson03RootContent(path: $navPath)
+                }
+            }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 
     @ViewBuilder
     private func lessonView(for topic: LessonTopic) -> some View {
         switch topic {
         case .stateBinding: Lesson01View()
         case .lists:        Lesson02View()
-        case .navigation:   Lesson03View()
+        case .navigation:   Lesson03View(path: $navPath)
         case .forms:        Lesson04View()
         case .mvvm:         Lesson05View()
         case .asyncAwait:   Lesson06View()

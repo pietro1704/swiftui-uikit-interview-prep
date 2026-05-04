@@ -24,7 +24,12 @@ struct Lesson10View: View {
                 Label("Snapshot testing for UI (pointfreeco lib)", systemImage: "camera")
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson10View() } }

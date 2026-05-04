@@ -82,7 +82,12 @@ struct Lesson16View: View {
                     .foregroundStyle(.secondary)
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson16View() } }

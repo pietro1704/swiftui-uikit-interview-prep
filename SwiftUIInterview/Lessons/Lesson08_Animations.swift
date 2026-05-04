@@ -60,7 +60,12 @@ struct Lesson08View: View {
                 .background(.quaternary.opacity(0.4), in: Capsule())
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson08View() } }

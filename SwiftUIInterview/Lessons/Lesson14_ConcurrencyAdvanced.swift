@@ -172,7 +172,12 @@ struct Lesson14View: View {
                 Text("Items in cache: \(vm.cacheCount)").font(.footnote)
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson14View() } }

@@ -24,7 +24,12 @@ struct CardStyle: ViewModifier {
             .padding()
             .background(tint.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(tint.opacity(0.4)))
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 extension View {
     func card(tint: Color = .blue) -> some View { modifier(CardStyle(tint: tint)) }
@@ -92,7 +97,12 @@ struct Lesson13View: View {
                 statusBadge("Testes", ok: false)
             }
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 private struct ThemedRow: View {
@@ -103,7 +113,12 @@ private struct ThemedRow: View {
             Circle().fill(theme).frame(width: 16, height: 16)
             Text(label)
         }
+        .enableInjection()
     }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
 }
 
 #Preview { NavigationStack { Lesson13View() } }
