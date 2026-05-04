@@ -149,7 +149,7 @@ private struct ReviewRow: View {
                         Text("Q\(question.id) · \(question.topic.rawValue)")
                             .font(.caption.weight(.semibold))
                             .foregroundStyle(.secondary)
-                        Text(question.prompt)
+                        Text(.init(question.prompt))   // markdown
                             .font(.callout)
                             .foregroundStyle(.primary)
                             .lineLimit(expanded ? nil : 2)
@@ -165,7 +165,7 @@ private struct ReviewRow: View {
             if expanded {
                 VStack(alignment: .leading, spacing: 10) {
                     if let chosen = state.selection(for: question) {
-                        Text("Your answer: \(question.options[chosen])")
+                        Text(.init("Your answer: \(question.options[chosen])"))
                             .font(.footnote)
                             .foregroundStyle(state.isCorrect(question) ? .green : .red)
                     } else {
@@ -173,10 +173,10 @@ private struct ReviewRow: View {
                             .font(.footnote)
                             .foregroundStyle(.secondary)
                     }
-                    Text("Correct: \(question.options[question.correctIndex])")
+                    Text(.init("Correct: \(question.options[question.correctIndex])"))
                         .font(.footnote)
                         .foregroundStyle(.green)
-                    Text(question.explanation)
+                    Text(.init(question.explanation))   // markdown
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     DisclosureGroup("Reference solution") {

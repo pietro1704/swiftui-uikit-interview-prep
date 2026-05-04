@@ -10,7 +10,9 @@
 import SwiftUI
 import Observation
 
-// MARK: - Drill 1: Inject a dependency without prop-drilling
+/*:
+ ## Drill 1 — Inject a dependency without prop-drilling
+ */
 
 /*:
  ### Prompt 1 — from-scratch
@@ -32,8 +34,10 @@ struct LiveAPI: APIClient {
     func fetch() async throws -> [String] { ["Apple", "Banana"] }
 }
 
-// TODO: 1) define a private EnvironmentKey for APIClient
-// TODO: 2) extension EnvironmentValues with `var api: any APIClient`
+/*:
+ TODO: 1) define a private EnvironmentKey for APIClient
+ TODO: 2) extension EnvironmentValues with `var api: any APIClient`
+ */
 
 struct DeepFeedView: View {
     // TODO: read the API client from the environment
@@ -43,7 +47,9 @@ struct DeepFeedView: View {
     }
 }
 
-// MARK: - Drill 2: View identity surprise
+/*:
+ ## Drill 2 — View identity surprise
+ */
 
 /*:
  ### Prompt 2 — bug-hunt
@@ -60,7 +66,9 @@ struct ProfileView: View {
     }
 }
 
-// MARK: - Drill 3: Reusable modifier with parameters
+/*:
+ ## Drill 3 — Reusable modifier with parameters
+ */
 
 /*:
  ### Prompt 3 — from-scratch
@@ -70,10 +78,14 @@ struct ProfileView: View {
  (b) the View extension that makes it ergonomic.
  */
 
-// TODO: 1) struct RoundedShadowStyle: ViewModifier { ... }
-// TODO: 2) extension View { func roundedShadow(...) -> some View { ... } }
+/*:
+ TODO: 1) struct RoundedShadowStyle: ViewModifier { ... }
+ TODO: 2) extension View { func roundedShadow(...) -> some View { ... } }
+ */
 
-// MARK: - Drill 4: PreferenceKey — child reports up
+/*:
+ ## Drill 4 — PreferenceKey — child reports up
+ */
 
 /*:
  ### Prompt 4 — from-scratch
@@ -85,7 +97,9 @@ struct ProfileView: View {
  ancestor reads via `.onPreferenceChange(...)`."
  */
 
-// TODO: HeightKey: PreferenceKey with defaultValue 0 and reduce = max
+/*:
+ TODO: HeightKey: PreferenceKey with defaultValue 0 and reduce = max
+ */
 
 struct ParentView: View {
     @State private var measuredHeight: CGFloat = 0
@@ -98,7 +112,9 @@ struct ParentView: View {
     }
 }
 
-// MARK: - Drill 5: Data-driven navigation in MVVM
+/*:
+ ## Drill 5 — Data-driven navigation in MVVM
+ */
 
 /*:
  ### Prompt 5 — from-scratch
@@ -128,7 +144,9 @@ struct FeedView: View {
     }
 }
 
-// MARK: - Drill 6: Custom Layout — wrapping tag cloud
+/*:
+ ## Drill 6 — Custom Layout — wrapping tag cloud
+ */
 
 /*:
  ### Prompt 6 — from-scratch
@@ -150,7 +168,9 @@ struct TagCloudLayout_Empty: Layout {
     }
 }
 
-// MARK: - Drill 7: Focus & keyboard with @FocusState
+/*:
+ ## Drill 7 — Focus & keyboard with @FocusState
+ */
 
 /*:
  ### Prompt 7 — from-scratch
@@ -171,7 +191,9 @@ struct LoginForm_Empty: View {
     }
 }
 
-// MARK: - Drill 8: NavigationStack(path:) — deep link
+/*:
+ ## Drill 8 — NavigationStack(path:) — deep link
+ */
 
 /*:
  ### Prompt 8 — bug-hunt
@@ -193,9 +215,13 @@ struct App08: View {
     }
 }
 
-// TODO: fix App08 so the deep link actually pushes the screens.
+/*:
+ TODO: fix App08 so the deep link actually pushes the screens.
+ */
 
-// MARK: - Drill 9: AnyLayout — adapt HStack/VStack
+/*:
+ ## Drill 9 — AnyLayout — adapt HStack/VStack
+ */
 
 /*:
  ### Prompt 9 — from-scratch

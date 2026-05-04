@@ -10,7 +10,9 @@
 import Foundation
 import Combine
 
-// MARK: - Drill 1: Spot the cycle
+/*:
+ ## Drill 1 — Spot the cycle
+ */
 
 /*:
  ### Prompt 1 — bug-hunt
@@ -32,9 +34,13 @@ final class Search_Buggy {
     }
 }
 
-// TODO: identify the cycle, then write a fixed bind().
+/*:
+ TODO: identify the cycle, then write a fixed bind().
+ */
 
-// MARK: - Drill 2: weak vs unowned
+/*:
+ ## Drill 2 — weak vs unowned
+ */
 
 /*:
  ### Prompt 2 — discussion
@@ -46,7 +52,9 @@ final class Search_Buggy {
 
 // (verbal — bullet points at bottom)
 
-// MARK: - Drill 3: Copy-on-Write — does this copy?
+/*:
+ ## Drill 3 — Copy-on-Write — does this copy?
+ */
 
 /*:
  ### Prompt 3 — discussion
@@ -61,7 +69,9 @@ final class Search_Buggy {
 
 // (verbal answer)
 
-// MARK: - Drill 4: Build CoW from scratch
+/*:
+ ## Drill 4 — Build CoW from scratch
+ */
 
 /*:
  ### Prompt 4 — from-scratch
@@ -85,7 +95,9 @@ struct Buffer {
     //   - mutate
 }
 
-// MARK: - Drill 5: Closure capturing in Swift Concurrency
+/*:
+ ## Drill 5 — Closure capturing in Swift Concurrency
+ */
 
 /*:
  ### Prompt 5 — discussion
@@ -106,7 +118,9 @@ struct Buffer {
 
 // (verbal answer)
 
-// MARK: - Drill 6: Property wrapper composition
+/*:
+ ## Drill 6 — Property wrapper composition
+ */
 
 /*:
  ### Prompt 6 — bug-hunt → from-scratch
@@ -129,11 +143,15 @@ struct Clamped_06<Value: Comparable> {
     }
 }
 
-// TODO: write a struct Player with @Clamped on a stored property.
-// TODO: discuss what happens if you stack @SomeOther @Clamped — what
-// projectedValue gets exposed via $x?
+/*:
+ TODO: write a struct Player with @Clamped on a stored property.
+ TODO: discuss what happens if you stack @SomeOther @Clamped — what
+ projectedValue gets exposed via $x?
+ */
 
-// MARK: - Drill 7: AnyHashable performance
+/*:
+ ## Drill 7 — AnyHashable performance
+ */
 
 /*:
  ### Prompt 7 — discussion

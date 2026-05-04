@@ -10,7 +10,9 @@
  */
 import Foundation
 
-// MARK: - Drill 1: Where does Task { } actually run?
+/*:
+ ## Drill 1 — Where does Task { } actually run?
+ */
 
 /*:
  ### Prompt 1 — bug-hunt
@@ -36,9 +38,13 @@ final class FeedVM_Buggy {
     }
 }
 
-// TODO: rewrite reload() so heavy work hops off main, results come back to main.
+/*:
+ TODO: rewrite reload() so heavy work hops off main, results come back to main.
+ */
 
-// MARK: - Drill 2: Actor reentrancy bug
+/*:
+ ## Drill 2 — Actor reentrancy bug
+ */
 
 /*:
  ### Prompt 2 — bug-hunt
@@ -64,9 +70,13 @@ actor BankAccount_Buggy {
     }
 }
 
-// TODO: Fix withdraw() so a second concurrent caller can't race the audit.
+/*:
+ TODO: Fix withdraw() so a second concurrent caller can't race the audit.
+ */
 
-// MARK: - Drill 3: Bounded parallelism
+/*:
+ ## Drill 3 — Bounded parallelism
+ */
 
 /*:
  ### Prompt 3 — from-scratch
@@ -82,7 +92,9 @@ func downloadAll(_ urls: [URL]) async throws -> [Data] {
     return []
 }
 
-// MARK: - Drill 4: Sendable under Swift 6
+/*:
+ ## Drill 4 — Sendable under Swift 6
+ */
 
 /*:
  ### Prompt 4 — bug-hunt
@@ -94,9 +106,13 @@ final class Cache_Buggy {
     var entries: [URL: Data] = [:]
 }
 
-// TODO: Show 3 options to make Cache safely cross actor boundaries.
+/*:
+ TODO: Show 3 options to make Cache safely cross actor boundaries.
+ */
 
-// MARK: - Drill 5: AsyncStream + cancellation
+/*:
+ ## Drill 5 — AsyncStream + cancellation
+ */
 
 /*:
  ### Prompt 5 — from-scratch
@@ -114,7 +130,9 @@ func makeTicker() -> AsyncStream<Int> {
     }
 }
 
-// MARK: - Drill 6: GlobalActor
+/*:
+ ## Drill 6 — GlobalActor
+ */
 
 /*:
  ### Prompt 6 — from-scratch
@@ -123,11 +141,15 @@ func makeTicker() -> AsyncStream<Int> {
  actor instance — without those types holding a reference to it.
  */
 
-// TODO:
-// 1. @globalActor actor DatabaseActor { static let shared = DatabaseActor() }
-// 2. annotate a function and a struct with @DatabaseActor
+/*:
+ TODO:
+ 1. `@globalActor actor DatabaseActor { static let shared = DatabaseActor() }`
+ 2. annotate a function and a struct with `@DatabaseActor`
+ */
 
-// MARK: - Drill 7: isolated parameters
+/*:
+ ## Drill 7 — isolated parameters
+ */
 
 /*:
  ### Prompt 7 — from-scratch
@@ -139,9 +161,13 @@ actor Counter {
     var value = 0
 }
 
-// TODO: func bump(_ counter: isolated Counter) { ... }
+/*:
+ TODO: func bump(_ counter: isolated Counter) { ... }
+ */
 
-// MARK: - Drill 8: Task priority inheritance
+/*:
+ ## Drill 8 — Task priority inheritance
+ */
 
 /*:
  ### Prompt 8 — bug-hunt
@@ -159,9 +185,13 @@ func startHeavyWork() {
 
 func heavyWork() async {}
 
-// TODO: rewrite to genuinely run at .background.
+/*:
+ TODO: rewrite to genuinely run at .background.
+ */
 
-// MARK: - Drill 9: AsyncSequence vs Combine
+/*:
+ ## Drill 9 — AsyncSequence vs Combine
+ */
 
 /*:
  ### Prompt 9 — from-scratch
@@ -172,9 +202,13 @@ func heavyWork() async {}
  Talk through the trade-offs.
  */
 
-// TODO: write both versions.
+/*:
+ TODO: write both versions.
+ */
 
-// MARK: - Drill 10: Cancellation propagation
+/*:
+ ## Drill 10 — Cancellation propagation
+ */
 
 /*:
  ### Prompt 10 — bug-hunt
@@ -193,9 +227,13 @@ func expensiveCompute(_ x: Int) -> Int {
     var s = 0; for _ in 0..<10_000_000 { s += x }; return s
 }
 
-// TODO: make computeAll observe cancellation.
+/*:
+ TODO: make computeAll observe cancellation.
+ */
 
-// MARK: - Drill 11: async let lifetime
+/*:
+ ## Drill 11 — async let lifetime
+ */
 
 /*:
  ### Prompt 11 — bug-hunt
@@ -214,9 +252,13 @@ func fetchBanner() async -> String { "" }
 func fetchPosts() async -> [String] { [] }
 func render(_ posts: [String]) {}
 
-// TODO: discuss the issue + fix it (drop async let or actually use the value).
+/*:
+ TODO: discuss the issue + fix it (drop async let or actually use the value).
+ */
 
-// MARK: - Drill 12: MainActor in init
+/*:
+ ## Drill 12 — MainActor in init
+ */
 
 /*:
  ### Prompt 12 — from-scratch
@@ -234,7 +276,9 @@ final class FeedVM_12 {
     }
 }
 
-// TODO: rewrite init so it can be called from any context.
+/*:
+ TODO: rewrite init so it can be called from any context.
+ */
 
 /*
 

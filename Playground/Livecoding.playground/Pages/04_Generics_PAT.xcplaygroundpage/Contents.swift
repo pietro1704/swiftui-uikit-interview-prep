@@ -10,7 +10,9 @@
  */
 import Foundation
 
-// MARK: - Drill 1: some vs any
+/*:
+ ## Drill 1 — some vs any
+ */
 
 /*:
  ### Prompt 1 — discussion
@@ -25,7 +27,9 @@ import Foundation
 
 // (verbal answer at the bottom)
 
-// MARK: - Drill 2: Why doesn't this compile?
+/*:
+ ## Drill 2 — Why doesn't this compile?
+ */
 
 /*:
  ### Prompt 2 — bug-hunt
@@ -52,9 +56,13 @@ struct RemoteFlags: DataSource_Bad {
     func load() async throws -> [Bool] { [true, false] }
 }
 
-// TODO: write a function returning a heterogeneous collection of DataSources.
+/*:
+ TODO: write a function returning a heterogeneous collection of DataSources.
+ */
 
-// MARK: - Drill 3: Type eraser by hand
+/*:
+ ## Drill 3 — Type eraser by hand
+ */
 
 /*:
  ### Prompt 3 — from-scratch
@@ -68,9 +76,13 @@ protocol DataSource {
     func load() async throws -> [Item]
 }
 
-// TODO: struct AnyDataSource<Item> { ... }
+/*:
+ TODO: struct AnyDataSource<Item> { ... }
+ */
 
-// MARK: - Drill 4: Primary associated types
+/*:
+ ## Drill 4 — Primary associated types
+ */
 
 /*:
  ### Prompt 4 — from-scratch
@@ -79,10 +91,14 @@ protocol DataSource {
  - "some Collection where Element is String" — function parameter
  */
 
-// TODO: function signatures using `some Collection<String>`
-// TODO: function using `any Sequence<Int>`
+/*:
+ TODO: function signatures using `some Collection<String>`
+ TODO: function using `any Sequence<Int>`
+ */
 
-// MARK: - Drill 5: firstDuplicate generic
+/*:
+ ## Drill 5 — firstDuplicate generic
+ */
 
 /*:
  ### Prompt 5 — bug-hunt → from-scratch
@@ -95,9 +111,13 @@ protocol DataSource {
  Now write the CORRECT signature for `firstDuplicate(_:)`.
  */
 
-// TODO: func firstDuplicate<T: Hashable>(_ items: [T]) -> T?
+/*:
+ TODO: func firstDuplicate<T: Hashable>(_ items: [T]) -> T?
+ */
 
-// MARK: - Drill 6: KeyPath flavors
+/*:
+ ## Drill 6 — KeyPath flavors
+ */
 
 /*:
  ### Prompt 6 — from-scratch
@@ -108,12 +128,16 @@ protocol DataSource {
 struct Person { var name: String }
 final class Account { var balance: Int = 0 }
 
-// TODO:
-// let nameKey: WritableKeyPath<Person, String> = ...
-// let balanceKey: ReferenceWritableKeyPath<Account, Int> = ...
-// func bump<R: AnyObject>(_ root: R, _ kp: ReferenceWritableKeyPath<R, Int>) { ... }
+/*:
+ TODO:
+ - `let nameKey: WritableKeyPath<Person, String> = ...`
+ - `let balanceKey: ReferenceWritableKeyPath<Account, Int> = ...`
+ - `func bump<R: AnyObject>(_ root: R, _ kp: ReferenceWritableKeyPath<R, Int>) { ... }`
+ */
 
-// MARK: - Drill 7: Conditional conformance
+/*:
+ ## Drill 7 — Conditional conformance
+ */
 
 /*:
  ### Prompt 7 — from-scratch
@@ -123,19 +147,27 @@ final class Account { var balance: Int = 0 }
 
 struct Box<T> { let value: T }
 
-// TODO: extension Box: Equatable where T: Equatable { ... }
-// TODO: extension Box: Hashable where T: Hashable { ... }
+/*:
+ TODO: extension Box: Equatable where T: Equatable { ... }
+ TODO: extension Box: Hashable where T: Hashable { ... }
+ */
 
-// MARK: - Drill 8: where Self: SomeProtocol
+/*:
+ ## Drill 8 — where Self: SomeProtocol
+ */
 
 /*:
  ### Prompt 8 — from-scratch
  Add `func sum() -> Element` to `Sequence` ONLY when `Element: Numeric`.
  */
 
-// TODO: extension Sequence where Element: Numeric { func sum() -> Element { ... } }
+/*:
+ TODO: extension Sequence where Element: Numeric { func sum() -> Element { ... } }
+ */
 
-// MARK: - Drill 9: dynamicMemberLookup
+/*:
+ ## Drill 9 — dynamicMemberLookup
+ */
 
 /*:
  ### Prompt 9 — from-scratch
@@ -144,12 +176,16 @@ struct Box<T> { let value: T }
  you accessed `box.wrapped.someProperty`.
  */
 
-// TODO:
-// @dynamicMemberLookup
-// struct Box<T> {
-//     var wrapped: T
-//     subscript<U>(dynamicMember keyPath: KeyPath<T, U>) -> U { ... }
-// }
+/*:
+ TODO:
+ ```swift
+ @dynamicMemberLookup
+ struct Box<T> {
+     var wrapped: T
+     subscript<U>(dynamicMember keyPath: KeyPath<T, U>) -> U { ... }
+ }
+ ```
+ */
 
 /*
 

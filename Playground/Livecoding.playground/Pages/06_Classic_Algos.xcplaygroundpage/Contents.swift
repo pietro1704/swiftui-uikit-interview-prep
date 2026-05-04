@@ -8,7 +8,9 @@
  */
 import Foundation
 
-// MARK: - Drill 1: Debounce a function
+/*:
+ ## Drill 1 — Debounce a function
+ */
 
 /*:
  ### Prompt 1
@@ -33,7 +35,9 @@ actor Debouncer {
     }
 }
 
-// MARK: - Drill 2: LRU Cache
+/*:
+ ## Drill 2 — LRU Cache
+ */
 
 /*:
  ### Prompt 2
@@ -61,7 +65,9 @@ final class LRUCache<Key: Hashable, Value> {
     }
 }
 
-// MARK: - Drill 3: Async semaphore
+/*:
+ ## Drill 3 — Async semaphore
+ */
 
 /*:
  ### Prompt 3
@@ -83,7 +89,9 @@ actor AsyncSemaphore {
     // TODO: func signal()
 }
 
-// MARK: - Drill 4: Throttle (leading edge)
+/*:
+ ## Drill 4 — Throttle (leading edge)
+ */
 
 /*:
  ### Prompt 4
@@ -103,7 +111,9 @@ actor Throttler {
     }
 }
 
-// MARK: - Drill 5: Custom AsyncSequence
+/*:
+ ## Drill 5 — Custom AsyncSequence
+ */
 
 /*:
  ### Prompt 5
@@ -123,7 +133,9 @@ struct CountdownSequence: AsyncSequence {
     func makeAsyncIterator() -> AsyncIterator { AsyncIterator() }
 }
 
-// MARK: - Drill 6: Composite + Factory
+/*:
+ ## Drill 6 — Composite + Factory
+ */
 
 /*:
  ### Prompt 6 — from-scratch
@@ -137,12 +149,16 @@ protocol AnalyticsService {
     func track(_ event: String, properties: [String: String])
 }
 
-// TODO: struct FirebaseAnalytics: AnalyticsService { ... }
-// TODO: struct MixpanelAnalytics: AnalyticsService { ... }
-// TODO: struct CompositeAnalytics: AnalyticsService { ... fans out ... }
-// TODO: factory function that picks composition based on a Bool flag.
+/*:
+ TODO: struct FirebaseAnalytics: AnalyticsService { ... }
+ TODO: struct MixpanelAnalytics: AnalyticsService { ... }
+ TODO: struct CompositeAnalytics: AnalyticsService { ... fans out ... }
+ TODO: factory function that picks composition based on a Bool flag.
+ */
 
-// MARK: - Drill 7: Deep link parser
+/*:
+ ## Drill 7 — Deep link parser
+ */
 
 /*:
  ### Prompt 7 — from-scratch
@@ -159,8 +175,10 @@ enum Route_07: Hashable {
     case post(UUID)
 }
 
-// TODO: struct DeepLinkParser { func route(from url: URL) -> Route_07? }
-// TODO: a tiny round-trip test (XCTAssertEqual on parsed result).
+/*:
+ TODO: struct DeepLinkParser { func route(from url: URL) -> Route_07? }
+ TODO: a tiny round-trip test (XCTAssertEqual on parsed result).
+ */
 
 /*
 

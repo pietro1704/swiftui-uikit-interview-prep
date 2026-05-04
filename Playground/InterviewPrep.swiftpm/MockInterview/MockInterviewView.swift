@@ -100,7 +100,7 @@ private struct QuestionPane: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(state.current.prompt)
+                Text(.init(state.current.prompt))   // markdown
                     .font(.body)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(14)
@@ -145,7 +145,7 @@ private struct OptionButton: View {
                 Image(systemName: marker)
                     .foregroundStyle(markerColor)
                     .font(.title3)
-                Text(label)
+                Text(.init(label))   // markdown
                     .font(.callout)
                     .foregroundStyle(.primary)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -204,7 +204,7 @@ private struct SolutionPanel: View {
                 Text(state.isCorrect(question) ? "Correct" : "Why this answer")
                     .font(.headline)
             }
-            Text(question.explanation)
+            Text(.init(question.explanation))   // markdown
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)

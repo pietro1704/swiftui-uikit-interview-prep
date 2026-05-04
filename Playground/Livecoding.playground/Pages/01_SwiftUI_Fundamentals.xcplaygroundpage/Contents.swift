@@ -35,7 +35,9 @@
 import SwiftUI
 import Observation
 
-// MARK: - Drill 1: Counter with extracted child
+/*:
+ ## Drill 1 — Counter with extracted child
+ */
 
 /*:
  ### Prompt 1 — from-scratch
@@ -71,7 +73,9 @@ struct CounterView: View {
     }
 }
 
-// MARK: - Drill 2: Why doesn't this list animate?
+/*:
+ ## Drill 2 — Why doesn't this list animate?
+ */
 
 /*:
  ### Prompt 2 — bug-hunt
@@ -104,7 +108,9 @@ struct FruitList: View {
     }
 }
 
-// MARK: - Drill 3: Convert this UIKit thinking to SwiftUI
+/*:
+ ## Drill 3 — Convert this UIKit thinking to SwiftUI
+ */
 
 /*:
  ### Prompt 3 — port
@@ -138,7 +144,9 @@ struct SearchView_Empty: View {
     }
 }
 
-// MARK: - Drill 4: .task vs .onAppear
+/*:
+ ## Drill 4 — .task vs .onAppear
+ */
 
 /*:
  ### Prompt 4 — bug-hunt
@@ -160,9 +168,13 @@ struct FeedView_Buggy: View {
     }
 }
 
-// TODO: rewrite to use `.task { ... }` so dismiss cancels the fetch.
+/*:
+ TODO: rewrite to use `.task { ... }` so dismiss cancels the fetch.
+ */
 
-// MARK: - Drill 5: @Bindable for child editing parent's @Observable
+/*:
+ ## Drill 5 — @Bindable for child editing parent's @Observable
+ */
 
 /*:
  ### Prompt 5 — bug-hunt
@@ -185,9 +197,13 @@ struct EditUserView_Buggy: View {
     }
 }
 
-// TODO: change the property declaration so $user.name works.
+/*:
+ TODO: change the property declaration so $user.name works.
+ */
 
-// MARK: - Drill 6: List with sections
+/*:
+ ## Drill 6 — List with sections
+ */
 
 /*:
  ### Prompt 6 — from-scratch
@@ -212,7 +228,9 @@ struct GroupedList_Empty: View {
     }
 }
 
-// MARK: - Drill 7: Environment value vs Environment(MyType.self)
+/*:
+ ## Drill 7 — Environment value vs Environment(MyType.self)
+ */
 
 /*:
  ### Prompt 7 — port
@@ -231,8 +249,10 @@ struct DeepView_OLD: View {
     }
 }
 
-// TODO: migrate Theme_OLD to @Observable; migrate DeepView_OLD to use
-// @Environment(Theme.self).
+/*:
+ TODO: migrate Theme_OLD to @Observable; migrate DeepView_OLD to use
+ @Environment(Theme.self).
+ */
 
 /*
 
