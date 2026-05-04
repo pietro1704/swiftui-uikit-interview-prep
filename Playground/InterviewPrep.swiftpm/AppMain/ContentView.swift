@@ -1,0 +1,124 @@
+import SwiftUI
+
+struct Lesson: Identifiable, Hashable {
+    let id: Int
+    let title: String
+    let summary: String
+    let icon: String
+    let topic: LessonTopic
+}
+
+enum LessonTopic: Hashable {
+    case mockInterview
+    case stateBinding
+    case lists
+    case navigation
+    case forms
+    case mvvm
+    case asyncAwait
+    case combine
+    case animations
+    case swiftData
+    case testing
+    case interop
+    case uikitAdvanced
+    case swiftUIAdvanced
+    case concurrencyAdvanced
+    case appLifecycle
+    case accessibility
+    case swiftDeepDive
+}
+
+struct ContentView: View {
+    let lessons: [Lesson] = [
+        .init(id: 0, title: "★ Senior Mock Interview", summary: "20-question quiz · concurrency, SwiftUI, architecture, Swift", icon: "person.fill.questionmark", topic: .mockInterview),
+        .init(id: 1, title: "01 — @State & @Binding", summary: "Local state and unidirectional flow", icon: "switch.2", topic: .stateBinding),
+        .init(id: 2, title: "02 — List & ForEach", summary: "Dynamic lists, swipe actions", icon: "list.bullet.rectangle", topic: .lists),
+        .init(id: 3, title: "03 — NavigationStack", summary: "Programmatic-path navigation", icon: "arrow.forward.circle", topic: .navigation),
+        .init(id: 4, title: "04 — Form & Validation", summary: "Forms and validation rules", icon: "checkmark.rectangle.stack", topic: .forms),
+        .init(id: 5, title: "05 — @Observable + MVVM", summary: "Observation macro and architecture", icon: "rectangle.stack", topic: .mvvm),
+        .init(id: 6, title: "06 — async/await + URLSession", summary: "Modern networking concurrency", icon: "network", topic: .asyncAwait),
+        .init(id: 7, title: "07 — Combine", summary: "Publishers, debounced search", icon: "antenna.radiowaves.left.and.right", topic: .combine),
+        .init(id: 8, title: "08 — Animations", summary: "withAnimation, matchedGeometry", icon: "wand.and.stars", topic: .animations),
+        .init(id: 9, title: "09 — SwiftData", summary: "@Model, @Query, persistence", icon: "externaldrive", topic: .swiftData),
+        .init(id: 10, title: "10 — Testing", summary: "Unit tests on the ViewModel", icon: "checkmark.shield", topic: .testing),
+        .init(id: 11, title: "11 — UIKit ↔ SwiftUI Interop", summary: "Representable, HostingController", icon: "arrow.triangle.2.circlepath", topic: .interop),
+        .init(id: 12, title: "12 — Advanced UIKit", summary: "Compositional, Diffable, custom UIControl", icon: "square.grid.3x3", topic: .uikitAdvanced),
+        .init(id: 13, title: "13 — Advanced SwiftUI", summary: "PreferenceKey, GeometryReader, ViewModifier", icon: "puzzlepiece.extension", topic: .swiftUIAdvanced),
+        .init(id: 14, title: "14 — Advanced Concurrency", summary: "TaskGroup, actor, AsyncStream", icon: "cpu", topic: .concurrencyAdvanced),
+        .init(id: 15, title: "15 — App Lifecycle", summary: "ScenePhase, AppDelegateAdaptor", icon: "app.badge", topic: .appLifecycle),
+        .init(id: 16, title: "16 — Accessibility", summary: "VoiceOver, Dynamic Type, Reduce Motion", icon: "figure.wave", topic: .accessibility),
+        .init(id: 17, title: "17 — Swift deep dive", summary: "Generics, opaque, result builders, wrappers", icon: "swift", topic: .swiftDeepDive),
+    ]
+
+    @State private var navPath = NavigationPath()
+
+    var body: some View {
+        NavigationStack(path: $navPath) {
+            List(lessons) { lesson in
+                NavigationLink(value: lesson.topic) {
+                    HStack(spacing: 14) {
+                        Image(systemName: lesson.icon)
+                            .font(.title2)
+                            .frame(width: 36, height: 36)
+                            .foregroundStyle(.tint)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(lesson.title).font(.headline)
+                            Text(lesson.summary)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
+            .navigationTitle("SwiftUI Interview Prep")
+            .navigationDestination(for: LessonTopic.self) { topic in
+                lessonView(for: topic)
+            }
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .detail(let id):
+                    Lesson03DetailView(id: id, path: $navPath)
+                case .profile(let name):
+                    Text("Profile: \(name)").font(.title)
+                case .root:
+                    Lesson03RootContent(path: $navPath)
+                }
+            }
+        }
+        .enableInjection()
+    }
+
+    #if DEBUG
+    @ObserveInjection var forceRedraw
+    #endif
+
+    @ViewBuilder
+    private func lessonView(for topic: LessonTopic) -> some View {
+        switch topic {
+        case .mockInterview: MockInterviewView()
+        case .stateBinding: Lesson01View()
+        case .lists:        Lesson02View()
+        case .navigation:   Lesson03View(path: $navPath)
+        case .forms:        Lesson04View()
+        case .mvvm:         Lesson05View()
+        case .asyncAwait:   Lesson06View()
+        case .combine:      Lesson07View()
+        case .animations:   Lesson08View()
+        case .swiftData:    Lesson09View()
+        case .testing:      Lesson10View()
+        case .interop:      Lesson11View()
+        case .uikitAdvanced: Lesson12View()
+        case .swiftUIAdvanced: Lesson13View()
+        case .concurrencyAdvanced: Lesson14View()
+        case .appLifecycle: Lesson15View()
+        case .accessibility: Lesson16View()
+        case .swiftDeepDive: Lesson17View()
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+}
