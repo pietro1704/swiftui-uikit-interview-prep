@@ -55,7 +55,7 @@ struct MockInterviewView: View {
                     QuestionPane(state: state)
                         .tabItem { Label("Question", systemImage: "questionmark.circle") }
                     LiveCodingPane(state: state)
-                        .tabItem { Label("Code", systemImage: "chevron.left.slash.chevron.right") }
+                        .tabItem { Label("Snippet", systemImage: "chevron.left.slash.chevron.right") }
                 }
             }
 
@@ -221,35 +221,58 @@ private struct SolutionPanel: View {
 private struct LiveCodingPane: View {
     let state: MockInterviewState
     @State private var showReference: Bool = false
+    @State private var copiedSnippet = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Label("Livecoding", systemImage: "chevron.left.slash.chevron.right")
+            HStack(alignment: .firstTextBaseline) {
+                Label("Starter snippet", systemImage: "chevron.left.slash.chevron.right")
                     .font(.headline)
                 Spacer()
                 Button {
-                    state.typedCode[state.current.id] = state.current.starterCode
+                    UIPasteboard.general.string = state.current.starterCode
+                    copiedSnippet = true
+                    Task { try? await Task.sleep(for: .seconds(2)); copiedSnippet = false }
                 } label: {
-                    Label("Reset snippet", systemImage: "arrow.counterclockwise")
-                        .font(.caption)
+                    Label(
+                        copiedSnippet ? "Copied" : "Copy",
+                        systemImage: copiedSnippet ? "checkmark" : "doc.on.doc"
+                    ).font(.caption)
                 }
                 .buttonStyle(.bordered)
+                .tint(copiedSnippet ? .green : .accentColor)
             }
 
-            TextEditor(text: bindingForCurrent)
-                .font(.system(size: 13, design: .monospaced))
-                .scrollContentBackground(.hidden)
-                .padding(8)
-                .background(Color.black.opacity(0.85), in: RoundedRectangle(cornerRadius: 8))
-                .foregroundStyle(.white)
-                .frame(maxHeight: .infinity)
+            if let ref = state.current.livecodingRef {
+                Label(ref, systemImage: "arrow.up.right.square")
+                    .font(.caption2)
+                    .foregroundStyle(.tint)
+                Text("Open Playground/Livecoding.playground in Xcode and find this drill.")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            } else {
+                Text("Conceptual question — discuss out loud; no livecoding drill.")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+
+            ScrollView([.vertical, .horizontal], showsIndicators: true) {
+                Text(state.current.starterCode)
+                    .font(.system(size: 13, design: .monospaced))
+                    .textSelection(.enabled)
+                    .padding(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .background(Color.black.opacity(0.85), in: RoundedRectangle(cornerRadius: 8))
+            .foregroundStyle(.white)
+            .frame(maxHeight: .infinity)
 
             if state.isRevealed(state.current) {
                 DisclosureGroup(isExpanded: $showReference) {
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView([.vertical, .horizontal], showsIndicators: true) {
                         Text(state.current.referenceSolution)
                             .font(.system(size: 12, design: .monospaced))
+                            .textSelection(.enabled)
                             .padding(10)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -263,13 +286,6 @@ private struct LiveCodingPane: View {
             }
         }
         .padding()
-    }
-
-    private var bindingForCurrent: Binding<String> {
-        Binding(
-            get: { state.typedCode[state.current.id] ?? state.current.starterCode },
-            set: { state.typedCode[state.current.id] = $0 }
-        )
     }
 }
 

@@ -4,9 +4,9 @@ import Observation
 // MARK: - Mock interview state machine
 //
 // Holds the candidate's progression through the question bank: current index,
-// per-question selection, candidate-typed code, scoring, and whether the
-// question's solution has been revealed. Designed for the side-by-side
-// interview view; survives navigation, drives the result screen.
+// per-question selection, scoring, and whether the question's solution has
+// been revealed. The starter snippet is shown read-only — actual livecoding
+// happens in Playground/Livecoding.playground.
 
 @Observable
 @MainActor
@@ -17,7 +17,6 @@ final class MockInterviewState {
 
     // Per-question state, keyed by Question.id.
     private(set) var selectedOption: [Int: Int] = [:]
-    var typedCode: [Int: String] = [:]
     private(set) var revealed: Set<Int> = []
 
     // Once finished, show the result screen.
@@ -25,7 +24,6 @@ final class MockInterviewState {
 
     init(questions: [Question] = QuestionBank.all) {
         self.questions = questions
-        for q in questions { typedCode[q.id] = q.starterCode }
     }
 
     // MARK: Navigation
@@ -102,7 +100,6 @@ final class MockInterviewState {
         selectedOption.removeAll()
         revealed.removeAll()
         isFinished = false
-        for q in questions { typedCode[q.id] = q.starterCode }
     }
 
     func finish() { isFinished = true }

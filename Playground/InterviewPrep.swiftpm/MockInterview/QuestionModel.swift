@@ -35,6 +35,45 @@ struct Question: Identifiable, Hashable {
     let explanation: String
     let starterCode: String
     let referenceSolution: String
+
+    /// Cross-reference into Playground/Livecoding.playground. Each quiz
+    /// question points at the page (and drill, when applicable) where the
+    /// candidate can actually code the answer with autocomplete + run.
+    /// Hand-picked rather than auto-generated so the mapping is honest:
+    /// some questions are conceptual and don't map to a livecoding drill.
+    var livecodingRef: String? {
+        switch id {
+        // Concurrency (Q1–5) → Page 03_AsyncAwait
+        case 1: "03_AsyncAwait · Drill 1 (where Task runs)"
+        case 2: "03_AsyncAwait · Drill 2 (actor reentrancy)"
+        case 3: "03_AsyncAwait · Drill 3 (bounded TaskGroup)"
+        case 4: "03_AsyncAwait · Drill 4 (Sendable migration)"
+        case 5: "03_AsyncAwait · Drill 5 (AsyncStream cleanup)"
+
+        // Advanced SwiftUI (Q6–10) → Pages 01 and 02
+        case 6:  "01_SwiftUI_Fundamentals · Drill 3 (UIKit→SwiftUI port)"
+        case 7:  "02_SwiftUI_Intermediate · Drill 4 (PreferenceKey)"
+        case 8:  "01_SwiftUI_Fundamentals · Drill 2 (identity bug)"
+        case 9:  "02_SwiftUI_Intermediate · Drill 3 (custom modifier)"
+        case 10: nil  // matchedGeometryEffect — discussed, not drilled
+
+        // Architecture (Q11–15) → mostly verbal, two have drills
+        case 11: nil  // MVVM vs TCA — verbal
+        case 12: "02_SwiftUI_Intermediate · Drill 1 (Environment DI)"
+        case 13: nil  // Strangler-fig refactor — verbal
+        case 14: "02_SwiftUI_Intermediate · Drill 5 (data-driven nav)"
+        case 15: nil  // Repository layering — verbal
+
+        // Swift deep dive (Q16–20) → Pages 04 + 05
+        case 16: "04_Generics_PAT · Drill 1 (some vs any)"
+        case 17: "05_ARC_Memory · Drill 1 (Combine retain cycle)"
+        case 18: "05_ARC_Memory · Drills 3+4 (CoW)"
+        case 19: "04_Generics_PAT · Drill 5 (firstDuplicate generic)"
+        case 20: "05_ARC_Memory · Drill 5 (Task captures vs sink)"
+
+        default: nil
+        }
+    }
 }
 
 // MARK: - Question bank
