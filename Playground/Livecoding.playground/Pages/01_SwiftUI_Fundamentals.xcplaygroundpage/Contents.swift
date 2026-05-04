@@ -1,18 +1,16 @@
 /*:
  # 01 — SwiftUI Fundamentals (livecoding drills)
 
- You said you've never used SwiftUI in production. This page builds the
- mental model from zero so you can reason out loud during a livecoding round.
+ Builds the SwiftUI mental model from zero so you can reason out loud
+ during a livecoding round. Useful even after years of UIKit — the
+ declarative paradigm flips a lot of intuitions.
 
- In a senior LATAM staffing interview, expect prompts like:
- - "Build a counter view; now extract a reusable child" (state ownership).
- - "Why doesn't this list animate?" (identity).
- - "Refactor this UIKit ViewController as SwiftUI" (state flow).
+ ## How to use this page
 
  Each drill below has:
  1. **Prompt** — what you'd be asked to produce.
  2. **Skeleton** — empty signature you fill in.
- 3. **Talk-track** — sentences to say while typing (interviewers reward this).
+ 3. **Talk-track** — sentences to say while typing.
  4. **Solution** — at the bottom, in a `/* … */` block. Don't peek.
 
  ----
@@ -35,21 +33,20 @@
  ----
  */
 import SwiftUI
+import Observation
 
 // MARK: - Drill 1: Counter with extracted child
 
 /*:
- ### Prompt 1
+ ### Prompt 1 — from-scratch
  Build a `CounterView` showing a number and `+` / `-` buttons. Then
  extract a `StepperRow` subview that takes a `@Binding<Int>` and renders
  the buttons. Parent owns state, child only mutates it.
 
- **Talk-track** (say while typing):
+ **Talk-track**:
  > "Parent owns `@State count`, passes `$count` as `@Binding` to the
  > child. The child mutates via `value -= 1`; SwiftUI propagates the
  > change up automatically because Binding is a two-way reference."
-
- Fill in the TODO blocks below.
  */
 
 struct StepperRow: View {
@@ -77,9 +74,9 @@ struct CounterView: View {
 // MARK: - Drill 2: Why doesn't this list animate?
 
 /*:
- ### Prompt 2 — debug
+ ### Prompt 2 — bug-hunt
  The list below visibly "jumps" instead of animating row insertions.
- The interviewer asks: **why?** Fix it without rewriting the data model.
+ The interviewer asks: **why?** Fix without rewriting the data model.
 
  **Hint:** look at the `id:` parameter on `ForEach`.
  */
@@ -110,7 +107,7 @@ struct FruitList: View {
 // MARK: - Drill 3: Convert this UIKit thinking to SwiftUI
 
 /*:
- ### Prompt 3
+ ### Prompt 3 — port
  An interviewer pastes pseudo-UIKit:
  ```
  // viewModel has @Published var query: String
@@ -125,9 +122,6 @@ struct FruitList: View {
  re-evaluates whenever an `@Observable` keypath I read changes."
  */
 
-import Observation
-
-// TODO: model with @Observable (NOT ObservableObject)
 final class SearchVM_Empty {
     var query = ""
     var results: [String] { ["one", "two", "three"].filter { $0.hasPrefix(query) } }
@@ -144,10 +138,101 @@ struct SearchView_Empty: View {
     }
 }
 
+// MARK: - Drill 4: .task vs .onAppear
+
 /*:
- ----
- ## When you're ready, scroll past the line below for the reference solutions.
+ ### Prompt 4 — bug-hunt
+ The view below leaks: dismissing it mid-load still hits `posts = ...` after
+ the network completes. Pick the right SwiftUI modifier so the load is
+ cancelled when the view disappears.
  */
+
+struct FeedView_Buggy: View {
+    @State private var posts: [String] = []
+    var body: some View {
+        List(posts, id: \.self) { Text($0) }
+            .onAppear {
+                Task {
+                    try? await Task.sleep(for: .seconds(2))
+                    posts = ["fetched"]   // <- mutation may run after dismiss
+                }
+            }
+    }
+}
+
+// TODO: rewrite to use `.task { ... }` so dismiss cancels the fetch.
+
+// MARK: - Drill 5: @Bindable for child editing parent's @Observable
+
+/*:
+ ### Prompt 5 — bug-hunt
+ The child view can't compile `$user.name`. Fix it without removing the
+ `@Observable` model.
+ */
+
+@Observable
+final class User_05 {
+    var name = ""
+    var email = ""
+}
+
+struct EditUserView_Buggy: View {
+    let user: User_05            // ❌ no $ available
+    var body: some View {
+        Form {
+            TextField("Name", text: $user.name)   // won't compile
+        }
+    }
+}
+
+// TODO: change the property declaration so $user.name works.
+
+// MARK: - Drill 6: List with sections
+
+/*:
+ ### Prompt 6 — from-scratch
+ Render the `groups` data below as a sectioned `List` — section title +
+ items per section.
+ */
+
+struct Group_06 {
+    let title: String
+    let items: [String]
+}
+
+let groups_06: [Group_06] = [
+    .init(title: "Fruits", items: ["Apple", "Mango"]),
+    .init(title: "Veggies", items: ["Kale", "Carrot"]),
+]
+
+struct GroupedList_Empty: View {
+    var body: some View {
+        // TODO: List with one Section per group
+        List { Text("placeholder") }
+    }
+}
+
+// MARK: - Drill 7: Environment value vs Environment(MyType.self)
+
+/*:
+ ### Prompt 7 — port
+ Old (pre-iOS 17) code uses `@EnvironmentObject` + `ObservableObject`. \
+ Migrate to the iOS 17+ `@Observable` + `@Environment(_)` style.
+ */
+
+final class Theme_OLD: ObservableObject {
+    @Published var color: Color = .blue
+}
+
+struct DeepView_OLD: View {
+    @EnvironmentObject var theme: Theme_OLD
+    var body: some View {
+        Text("hi").foregroundStyle(theme.color)
+    }
+}
+
+// TODO: migrate Theme_OLD to @Observable; migrate DeepView_OLD to use
+// @Environment(Theme.self).
 
 /*
 
@@ -176,24 +261,14 @@ struct SearchView_Empty: View {
          }
      }
  }
- // Talk-track addendum: "I could have passed a closure (count: Int, onChange: (Int) -> Void)
- //  but Binding is more idiomatic and the parent doesn't have to forward
- //  every event by hand."
 
  // ----- Drill 2 -----
- // Bug: `id: \.name` keys identity by a value that ALSO acts as the
- // displayed content. If the user renames a fruit, identity changes and
- // SwiftUI tears down the row instead of updating it. Worse: if two fruits
- // had the same name, identity would collide.
- //
- // Fix: give Fruit a stable `Identifiable` id (UUID), use ForEach(fruits).
+ // Bug: id: \.name uses content as identity. Renaming a fruit churns
+ // identity → SwiftUI tears down the row instead of updating it.
+ // Fix: stable id (UUID), use ForEach(fruits) with Identifiable.
  //
  // struct Fruit: Identifiable { let id = UUID(); var name: String; var emoji: String }
  // ForEach(fruits) { fruit in Text("\(fruit.emoji) \(fruit.name)") }
- //
- // Senior framing: "SwiftUI's diffing is identity-driven. Anything that
- //  varies with content is a bad identity choice — the rule is *stable +
- //  unique*, like a database primary key."
 
  // ----- Drill 3 -----
  @Observable
@@ -205,19 +280,65 @@ struct SearchView_Empty: View {
      }
  }
  struct SearchView: View {
-     @State private var vm = SearchVM()    // @State OWNS the @Observable instance
+     @State private var vm = SearchVM()
      var body: some View {
          VStack {
-             TextField("Search", text: $vm.query)   // Bindable via $vm.query
+             TextField("Search", text: $vm.query)
                  .textFieldStyle(.roundedBorder)
              List(vm.results, id: \.self) { Text($0) }
          }
      }
  }
- // Three things to call out aloud:
- //  - @State on @Observable is the Apple-blessed pattern (vs old @StateObject).
- //  - $vm.query works because @Observable conforms to Bindable.
- //  - body re-runs only when the keypaths it reads (query, results)
- //    actually change — fine-grained, unlike ObservableObject.
+
+ // ----- Drill 4 -----
+ struct FeedView: View {
+     @State private var posts: [String] = []
+     var body: some View {
+         List(posts, id: \.self) { Text($0) }
+             .task {                                 // tied to view lifetime
+                 try? await Task.sleep(for: .seconds(2))
+                 posts = ["fetched"]
+             }
+     }
+ }
+ // .task auto-cancels when view disappears; .onAppear { Task {} } does NOT.
+
+ // ----- Drill 5 -----
+ struct EditUserView: View {
+     @Bindable var user: User_05      // unlocks $user.name etc.
+     var body: some View {
+         Form {
+             TextField("Name", text: $user.name)
+             TextField("Email", text: $user.email)
+         }
+     }
+ }
+ // Senior framing: "Bindable lets a child view that received an @Observable
+ //  by value still get bindings to its properties — replaces the old
+ //  ObservedObject-passing-via-Binding pattern."
+
+ // ----- Drill 6 -----
+ List {
+     ForEach(groups_06, id: \.title) { group in
+         Section(group.title) {
+             ForEach(group.items, id: \.self) { Text($0) }
+         }
+     }
+ }
+
+ // ----- Drill 7 -----
+ @Observable
+ final class Theme {
+     var color: Color = .blue
+ }
+ struct DeepView: View {
+     @Environment(Theme.self) private var theme
+     var body: some View {
+         Text("hi").foregroundStyle(theme.color)
+     }
+ }
+ // App entry:
+ //   @State private var theme = Theme()
+ //   ContentView().environment(theme)
 
 */

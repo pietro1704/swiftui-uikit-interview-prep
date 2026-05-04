@@ -1,7 +1,7 @@
 /*:
  # 06 — Classic livecoding problems in Swift
 
- Five problems senior LATAM staffing screens love. Each is small enough
+ Five problems senior iOS screens love. Each is small enough
  to whiteboard in 15-25 min while you talk through trade-offs.
 
  ----
@@ -122,6 +122,45 @@ struct CountdownSequence: AsyncSequence {
     }
     func makeAsyncIterator() -> AsyncIterator { AsyncIterator() }
 }
+
+// MARK: - Drill 6: Composite + Factory
+
+/*:
+ ### Prompt 6 — from-scratch
+ Build an `AnalyticsService` protocol with two concrete implementations
+ (Firebase, Mixpanel) plus a `CompositeAnalytics` that fans out to all
+ of them. Show how you'd build the right composition at startup based
+ on a feature flag.
+ */
+
+protocol AnalyticsService {
+    func track(_ event: String, properties: [String: String])
+}
+
+// TODO: struct FirebaseAnalytics: AnalyticsService { ... }
+// TODO: struct MixpanelAnalytics: AnalyticsService { ... }
+// TODO: struct CompositeAnalytics: AnalyticsService { ... fans out ... }
+// TODO: factory function that picks composition based on a Bool flag.
+
+// MARK: - Drill 7: Deep link parser
+
+/*:
+ ### Prompt 7 — from-scratch
+ Build a `DeepLinkParser` that turns these URLs into typed `Route` values:
+   - `myapp://profile/abc123`         → .profile(\"abc123\")
+   - `myapp://post/<UUID>`             → .post(uuid)
+   - anything else                     → nil
+
+ Show a unit test that round-trips one of each.
+ */
+
+enum Route_07: Hashable {
+    case profile(String)
+    case post(UUID)
+}
+
+// TODO: struct DeepLinkParser { func route(from url: URL) -> Route_07? }
+// TODO: a tiny round-trip test (XCTAssertEqual on parsed result).
 
 /*
 
@@ -265,5 +304,55 @@ struct CountdownSequence: AsyncSequence {
  }
  // Use:
  //   for await n in CountdownSequence(from: 3, delay: .seconds(1)) { print(n) }
+
+ // ----- Drill 6: Composite + Factory -----
+ struct FirebaseAnalytics: AnalyticsService {
+     func track(_ event: String, properties: [String: String]) {
+         // send to Firebase
+     }
+ }
+ struct MixpanelAnalytics: AnalyticsService {
+     func track(_ event: String, properties: [String: String]) {
+         // send to Mixpanel
+     }
+ }
+ struct CompositeAnalytics: AnalyticsService {
+     let services: [any AnalyticsService]
+     func track(_ event: String, properties: [String: String]) {
+         services.forEach { $0.track(event, properties: properties) }
+     }
+ }
+ enum AnalyticsFactory {
+     static func make(useDualPipeline: Bool) -> any AnalyticsService {
+         useDualPipeline
+             ? CompositeAnalytics(services: [FirebaseAnalytics(), MixpanelAnalytics()])
+             : FirebaseAnalytics()
+     }
+ }
+ // Senior framing: protocol + composite is how you get a "fan-out" without
+ //  the rest of the app knowing — every consumer sees `any AnalyticsService`.
+
+ // ----- Drill 7: DeepLinkParser -----
+ struct DeepLinkParser {
+     func route(from url: URL) -> Route_07? {
+         guard url.scheme == "myapp" else { return nil }
+         switch url.host {
+         case "profile":
+             let id = url.lastPathComponent
+             guard !id.isEmpty, id != "/" else { return nil }
+             return .profile(id)
+         case "post":
+             guard let uuid = UUID(uuidString: url.lastPathComponent) else { return nil }
+             return .post(uuid)
+         default: return nil
+         }
+     }
+ }
+ // Tiny round-trip:
+ //   let p = DeepLinkParser()
+ //   assert(p.route(from: URL(string: "myapp://profile/abc123")!) == .profile("abc123"))
+ //   let id = UUID()
+ //   assert(p.route(from: URL(string: "myapp://post/\(id)")!) == .post(id))
+ //   assert(p.route(from: URL(string: "https://google.com")!) == nil)
 
 */

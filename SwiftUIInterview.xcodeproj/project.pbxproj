@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		021541D220DECFDFEC2745BE /* Questions+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3353096B2BCF0175E049F28 /* Questions+SwiftUI.swift */; };
 		08BF95DFAD32CF3512ABDBC0 /* LessonScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D56B613E66C87A18E5771FD /* LessonScaffold.swift */; };
 		08E862FCBD0BA92D5D8B26FB /* Lesson14_ConcurrencyAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B2B0F6AD5AFFDC781BA5D /* Lesson14_ConcurrencyAdvanced.swift */; };
 		0C1F7CBDDD3B46D86F73D4F0 /* Lesson06_AsyncAwait.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC719AA01EC8937811DAA8C0 /* Lesson06_AsyncAwait.swift */; };
+		0F02D37B12B80B93F485A315 /* QuestionBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 886BAD9796B47F8AA6FD8614 /* QuestionBank.swift */; };
 		16BF28D3D2253D2FE71F96AE /* MockInterviewResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC691961BB906AE4E85F6FD6 /* MockInterviewResultView.swift */; };
+		2E8275595BB574EFED85ADDB /* Questions+Concurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D330B181A48373BC37395A4E /* Questions+Concurrency.swift */; };
 		2FBCA2250891F09FFBFDC221 /* Lesson08_Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E7F843F8C24088ED30E94F /* Lesson08_Animations.swift */; };
 		2FDB9BAACE3AB261E425D846 /* MockInterviewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408CE8CD9616D912E4DE14B5 /* MockInterviewState.swift */; };
 		310F62BFB3DC3D5C293BAA69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0157EBE94FDF5F5259244E9A /* ContentView.swift */; };
@@ -24,10 +27,13 @@
 		5B369CE0D0EB9A8462C99620 /* Lesson05_MVVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DCD8622FEC9D6CCE7B41C4B /* Lesson05_MVVM.swift */; };
 		75B8F13896D1946AD205F270 /* SwiftUIInterviewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9BC0B2990405D58C8659AF /* SwiftUIInterviewApp.swift */; };
 		91F5286B953398E1F2D64C69 /* Lesson17_SwiftDeepDive.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA36E9B8E89C188162F47200 /* Lesson17_SwiftDeepDive.swift */; };
+		923DE0065F40022392307710 /* Questions+Architecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E687219AD94151E89FC2B96A /* Questions+Architecture.swift */; };
 		9C0EEF4E4351523AD9B1B61E /* MockInterviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1CB676EC8BBBC3A9C55DC0 /* MockInterviewView.swift */; };
 		9F7D894992DB756F1AB05D7E /* CounterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093FAF93BBE4FBEEC69D5A09 /* CounterViewModelTests.swift */; };
 		AB6F871B3C95FDEE9806A36F /* LessonSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2B4460FF0794C95BD81A42 /* LessonSnapshotTests.swift */; };
+		AC79E4092E0B01298FB5C9FB /* Questions+SwiftCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24D51E6431AE9BE614331AC /* Questions+SwiftCore.swift */; };
 		B1AEB2314EA900BEEF081AEC /* Lesson07_Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D423174B4E5934669613AD82 /* Lesson07_Combine.swift */; };
+		B7C484603BB3A59CBD47C4E7 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CFEA0D668FD330531F0525 /* Question.swift */; };
 		B9E277842F977B430F8F40E2 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 8E9F70B039FFA35CC57FE1B3 /* SnapshotTesting */; };
 		D2374FB70A5F979A53A30E43 /* InjectStubs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ABAA4B24FE7FE150A7C013 /* InjectStubs.swift */; };
 		D3450E05E26A8B7B1E3529C0 /* Lesson04_Forms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336F1D030B0E3E70391CAE4A /* Lesson04_Forms.swift */; };
@@ -35,7 +41,6 @@
 		DC88FFF5599EE3A7AE8185D3 /* Lesson12_UIKitAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0DE309AF5371D3CF706A1 /* Lesson12_UIKitAdvanced.swift */; };
 		ED4F94564C4DF3A8E4CBD513 /* Lesson16_Accessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A5A11A34401E2DA0C824F2 /* Lesson16_Accessibility.swift */; };
 		F0A3E8B99F16F0C6975F2F65 /* Lesson15_AppLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13695B06B0F58A04870105BA /* Lesson15_AppLifecycle.swift */; };
-		F0F1F41DBCAB4F2B86209937 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86226850A73DDC2B8DBBF85 /* QuestionModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +69,10 @@
 		5F0B2B0F6AD5AFFDC781BA5D /* Lesson14_ConcurrencyAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson14_ConcurrencyAdvanced.swift; sourceTree = "<group>"; };
 		65D0DE309AF5371D3CF706A1 /* Lesson12_UIKitAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson12_UIKitAdvanced.swift; sourceTree = "<group>"; };
 		6D56B613E66C87A18E5771FD /* LessonScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonScaffold.swift; sourceTree = "<group>"; };
+		74CFEA0D668FD330531F0525 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		886BAD9796B47F8AA6FD8614 /* QuestionBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionBank.swift; sourceTree = "<group>"; };
 		9DCD8622FEC9D6CCE7B41C4B /* Lesson05_MVVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson05_MVVM.swift; sourceTree = "<group>"; };
+		A24D51E6431AE9BE614331AC /* Questions+SwiftCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Questions+SwiftCore.swift"; sourceTree = "<group>"; };
 		A27D1DC645B8990251479705 /* Lesson13_SwiftUIAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson13_SwiftUIAdvanced.swift; sourceTree = "<group>"; };
 		A60E78F00B3F4A712C7AE2B9 /* Lesson10_Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson10_Testing.swift; sourceTree = "<group>"; };
 		A7BF6143782C4B664952E527 /* Lesson11_Interop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson11_Interop.swift; sourceTree = "<group>"; };
@@ -72,12 +80,14 @@
 		B0D9E08CBA352FAC4465B1E7 /* SwiftUIInterview.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SwiftUIInterview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA36E9B8E89C188162F47200 /* Lesson17_SwiftDeepDive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson17_SwiftDeepDive.swift; sourceTree = "<group>"; };
 		C1A5A11A34401E2DA0C824F2 /* Lesson16_Accessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson16_Accessibility.swift; sourceTree = "<group>"; };
+		D330B181A48373BC37395A4E /* Questions+Concurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Questions+Concurrency.swift"; sourceTree = "<group>"; };
 		D36D5C8671739FAC6076809A /* Lesson03_Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson03_Navigation.swift; sourceTree = "<group>"; };
 		D423174B4E5934669613AD82 /* Lesson07_Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson07_Combine.swift; sourceTree = "<group>"; };
 		DD1344ED5F90EB49FAC6FBE1 /* Lesson01_StateBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson01_StateBinding.swift; sourceTree = "<group>"; };
 		E1ABAA4B24FE7FE150A7C013 /* InjectStubs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectStubs.swift; sourceTree = "<group>"; };
 		E43E9CEA35119C88C77C2550 /* SwiftUIInterviewTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SwiftUIInterviewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E86226850A73DDC2B8DBBF85 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
+		E687219AD94151E89FC2B96A /* Questions+Architecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Questions+Architecture.swift"; sourceTree = "<group>"; };
+		F3353096B2BCF0175E049F28 /* Questions+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Questions+SwiftUI.swift"; sourceTree = "<group>"; };
 		FC691961BB906AE4E85F6FD6 /* MockInterviewResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockInterviewResultView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,7 +180,12 @@
 				FC691961BB906AE4E85F6FD6 /* MockInterviewResultView.swift */,
 				408CE8CD9616D912E4DE14B5 /* MockInterviewState.swift */,
 				4D1CB676EC8BBBC3A9C55DC0 /* MockInterviewView.swift */,
-				E86226850A73DDC2B8DBBF85 /* QuestionModel.swift */,
+				74CFEA0D668FD330531F0525 /* Question.swift */,
+				886BAD9796B47F8AA6FD8614 /* QuestionBank.swift */,
+				E687219AD94151E89FC2B96A /* Questions+Architecture.swift */,
+				D330B181A48373BC37395A4E /* Questions+Concurrency.swift */,
+				A24D51E6431AE9BE614331AC /* Questions+SwiftCore.swift */,
+				F3353096B2BCF0175E049F28 /* Questions+SwiftUI.swift */,
 			);
 			path = MockInterview;
 			sourceTree = "<group>";
@@ -304,7 +319,12 @@
 				16BF28D3D2253D2FE71F96AE /* MockInterviewResultView.swift in Sources */,
 				2FDB9BAACE3AB261E425D846 /* MockInterviewState.swift in Sources */,
 				9C0EEF4E4351523AD9B1B61E /* MockInterviewView.swift in Sources */,
-				F0F1F41DBCAB4F2B86209937 /* QuestionModel.swift in Sources */,
+				B7C484603BB3A59CBD47C4E7 /* Question.swift in Sources */,
+				0F02D37B12B80B93F485A315 /* QuestionBank.swift in Sources */,
+				923DE0065F40022392307710 /* Questions+Architecture.swift in Sources */,
+				2E8275595BB574EFED85ADDB /* Questions+Concurrency.swift in Sources */,
+				AC79E4092E0B01298FB5C9FB /* Questions+SwiftCore.swift in Sources */,
+				021541D220DECFDFEC2745BE /* Questions+SwiftUI.swift in Sources */,
 				3EC3FA48568819FB886019AD /* SolutionDisclosure.swift in Sources */,
 				75B8F13896D1946AD205F270 /* SwiftUIInterviewApp.swift in Sources */,
 			);

@@ -1,9 +1,9 @@
 /*:
  # 05 — ARC, retain cycles, and copy-on-write
 
- Memory questions are senior gates. Six years of UIKit experience helps
- here, but interviewers love the *Combine + closure* combos that didn't
- exist in early Swift.
+ Memory questions are senior gates. Six years of UIKit experience helps,
+ but interviewers love the *Combine + closure* combos that didn't exist
+ in early Swift, plus property wrapper composition and AnyHashable.
 
  ----
  */
@@ -13,9 +13,8 @@ import Combine
 // MARK: - Drill 1: Spot the cycle
 
 /*:
- ### Prompt 1
- The interviewer pastes this and asks if it leaks. If yes, fix it without
- changing the public API.
+ ### Prompt 1 — bug-hunt
+ Does this leak? If yes, fix it without changing the public API.
  */
 
 final class Search_Buggy {
@@ -38,11 +37,11 @@ final class Search_Buggy {
 // MARK: - Drill 2: weak vs unowned
 
 /*:
- ### Prompt 2
- You replace `self.results = [value]` with `[weak self] in self?.results = [value]`.
+ ### Prompt 2 — discussion
+ You replace `self.results = ...` with `[weak self]` + `self?.results = ...`.
  The interviewer asks: "Why didn't you use `[unowned self]`? It's faster."
 
- Write the answer — when is each correct?
+ When is each correct?
  */
 
 // (verbal — bullet points at bottom)
@@ -50,7 +49,7 @@ final class Search_Buggy {
 // MARK: - Drill 3: Copy-on-Write — does this copy?
 
 /*:
- ### Prompt 3
+ ### Prompt 3 — discussion
  ```swift
  var a = Array(repeating: 1, count: 1_000_000)
  var b = a       // ① copies?
@@ -65,10 +64,10 @@ final class Search_Buggy {
 // MARK: - Drill 4: Build CoW from scratch
 
 /*:
- ### Prompt 4
+ ### Prompt 4 — from-scratch
  Implement a value type `Buffer` that holds a class-backed `Storage` and
- only clones the storage when mutated AND the storage is shared. The
- magic key word: `isKnownUniquelyReferenced`.
+ only clones storage when mutated AND the storage is shared. Magic word:
+ `isKnownUniquelyReferenced`.
  */
 
 final class Storage {
@@ -79,9 +78,7 @@ final class Storage {
 
 struct Buffer {
     private var storage: Storage = Storage([])
-
     var data: [Int] { storage.data }
-
     // TODO: mutating func append(_ x: Int)
     //   - check isKnownUniquelyReferenced(&storage)
     //   - clone if shared
@@ -91,8 +88,8 @@ struct Buffer {
 // MARK: - Drill 5: Closure capturing in Swift Concurrency
 
 /*:
- ### Prompt 5
- ```swift
+ ### Prompt 5 — discussion
+ ```
  final class FeedVM {
      var posts: [String] = []
      func load() {
@@ -103,9 +100,44 @@ struct Buffer {
      }
  }
  ```
- The interviewer asks: "Same retain-cycle worry as the Combine sink?"
+ Same retain-cycle worry as the Combine sink? Hint: NO — explain why
+ `Task { }` is different from a stored closure.
+ */
 
- Hint: NO — explain why Task { } is different from a stored closure.
+// (verbal answer)
+
+// MARK: - Drill 6: Property wrapper composition
+
+/*:
+ ### Prompt 6 — bug-hunt → from-scratch
+ You write `@Published @SomeWrapper var x: Int = 0` in a class. Order
+ of the wrappers matters — explain how nesting works, and write a tiny
+ `@Clamped` wrapper that composes correctly with another wrapper.
+ */
+
+@propertyWrapper
+struct Clamped_06<Value: Comparable> {
+    private var value: Value
+    private let range: ClosedRange<Value>
+    init(wrappedValue: Value, _ range: ClosedRange<Value>) {
+        self.range = range
+        self.value = min(max(wrappedValue, range.lowerBound), range.upperBound)
+    }
+    var wrappedValue: Value {
+        get { value }
+        set { value = min(max(newValue, range.lowerBound), range.upperBound) }
+    }
+}
+
+// TODO: write a struct Player with @Clamped on a stored property.
+// TODO: discuss what happens if you stack @SomeOther @Clamped — what
+// projectedValue gets exposed via $x?
+
+// MARK: - Drill 7: AnyHashable performance
+
+/*:
+ ### Prompt 7 — discussion
+ When does `[AnyHashable: Any]` bite you? When is it the right tool?
  */
 
 // (verbal answer)
@@ -135,65 +167,79 @@ struct Buffer {
              .store(in: &bag)
      }
  }
- // Even nicer: $query.map { ... }.assign(to: &$results) — Combine's
- // built-in cycle-safe assignment when results is also @Published.
+ // Even nicer: $query.map { ... }.assign(to: &$results) — built-in cycle-safe.
 
  // ----- Drill 2: weak vs unowned -----
  //
  // [weak self]:
  //   - self becomes Optional, deallocates safely → safe.
  //   - tiny perf cost (extra ref-count load to check liveness).
- //   - USE THIS by default for closures that may outlive self.
+ //   - USE BY DEFAULT for closures that may outlive self.
  //
  // [unowned self]:
  //   - non-optional, no liveness check.
  //   - CRASH if self deallocates before the closure fires.
- //   - USE ONLY when self's lifetime is provably ≥ closure's:
- //     e.g., closures stored on `self` itself that fire only while
- //     self is alive (e.g., a custom button's tap handler defined inline).
- //
- // For Combine sinks, network completion handlers, AsyncStream consumers:
- // ALWAYS [weak self]. Publisher may emit after view dismiss.
+ //   - USE ONLY when self's lifetime is provably ≥ closure's.
 
  // ----- Drill 3: CoW walkthrough -----
- // ① `var b = a` → O(1). Both a and b point to the SAME backing buffer.
- //    Reference count of the buffer = 2.
- // ② `b.append(2)` → Array calls `_makeUniqueAndReserveCapacityIfNotUnique`
- //    internally. Sees buffer is shared (refcount > 1) → CLONES THE BUFFER,
- //    `b` now owns a private copy, then mutates. `a` stays untouched.
- // ③ Prints 1_000_000. `a` was not modified.
- //
- // CoW classes: Array, Dictionary, Set, String. Custom value types can
- //  opt in via `isKnownUniquelyReferenced`.
+ // ① `var b = a` → O(1). Both point to SAME backing buffer; refcount=2.
+ // ② `b.append(2)` → Array calls _makeUniqueAndReserveCapacityIfNotUnique;
+ //    sees buffer shared → CLONES, b owns private copy, mutates. a unchanged.
+ // ③ Prints 1_000_000.
 
  // ----- Drill 4: hand-rolled CoW -----
- struct Buffer {
+ struct Buffer_Sol {
      private var storage: Storage = Storage([])
      var data: [Int] { storage.data }
-
      mutating func append(_ x: Int) {
          if !isKnownUniquelyReferenced(&storage) {
-             storage = storage.clone()      // share→clone exactly when needed
+             storage = storage.clone()
          }
          storage.data.append(x)
      }
  }
- // `Buffer` now has value semantics: `var b = a` is O(1), `b.append(...)`
- // doesn't touch `a`'s storage. Same deal as stdlib Array.
+ // Buffer now has value semantics: var b = a is O(1); b.append() doesn't
+ // touch a's storage.
 
  // ----- Drill 5: Task vs stored closure -----
- // No cycle.
- // Reason: `Task { ... }` is unstructured but the Task does NOT live on
- // self. Once the closure body completes, the Task and its captured
- // `self` are released. Compare to:
+ // No cycle. The Task does NOT live on self — once the body completes,
+ // the Task and its captured `self` are released. Compare to:
  //   var bag = Set<AnyCancellable>(); $query.sink { self.x = $0 }.store(in: &bag)
- // The cancellable is *kept alive* by self → cycle.
+ // The cancellable IS kept alive by self → cycle.
  //
- // If you want to be belt-and-suspenders, use `[weak self] in` inside
- // Task — but it's not the same liability.
+ // The cycle worry with Task: storing the Task handle on self
+ //   self.handle = Task { ... }
+ // creates a transient cycle until the body finishes.
+
+ // ----- Drill 6: Property wrapper composition -----
+ struct Player {
+     @Clamped_06(0...100) var hp: Int = 50
+ }
+
+ // Stacking: `@Wrapper2 @Clamped var x` desugars to `Wrapper2<Clamped<Int>>`.
+ // The OUTER wrapper provides $x. So in:
+ //   @Published @Clamped(0...100) var hp: Int = 50
+ // - storage type: Published<Clamped<Int>>
+ // - x's getter goes Published.value.wrappedValue
+ // - $x is whatever Published projects (Publisher<Clamped<Int>, Never>)
  //
- // The ACTUAL cycle worry with Task: storing the Task handle on self
- //   `self.handle = Task { ... }` → if the task body captures self,
- //   you have a transient cycle until the task finishes.
+ // Practical advice: composition is rare. Most teams pick one wrapper at
+ // a time. If you compose, write a 3-line comment explaining the order.
+
+ // ----- Drill 7: AnyHashable performance -----
+ //
+ // AnyHashable boxes the underlying type at runtime. Hashing costs an
+ // extra pointer indirection per lookup; equality goes through dynamic
+ // dispatch. For hot paths (large dicts, frequent lookups), it can be
+ // 2-5x slower than typed Dictionary<Int, Foo>. Plus you lose compile-
+ // time type safety on values.
+ //
+ // RIGHT for: Notification.userInfo (legacy API), genuinely heterogeneous
+ //  keying (analytics events with mixed key types), bridging from NS APIs.
+ //
+ // WRONG for: any internal data structure where keys are known. Type the
+ //  dict.
+ //
+ // Senior framing: "AnyHashable is an existential — pay only when you need it."
 
 */
