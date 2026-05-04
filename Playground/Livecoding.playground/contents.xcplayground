@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playground version='6.0' target-platform='ios' display-mode='rendered'>
+    <pages>
+        <page name='01_SwiftUI_Fundamentals'/>
+        <page name='02_SwiftUI_Intermediate'/>
+        <page name='03_AsyncAwait'/>
+        <page name='04_Generics_PAT'/>
+        <page name='05_ARC_Memory'/>
+        <page name='06_Classic_Algos'/>
+    </pages>
+</playground>
