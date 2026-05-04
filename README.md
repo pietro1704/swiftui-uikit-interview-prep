@@ -78,6 +78,26 @@ It mirrors all 17 lessons + the senior mock-interview quiz, just without
 hot-reload (Inject) and without XCTest. See `Playground/InterviewPrep.swiftpm/README.md`
 for details.
 
+### Low-RAM Macs (8 GB)
+
+The Inject hot-reload SPM dependency was removed from the main project
+to keep memory pressure low on 8 GB Macs (sourcekit-service can otherwise
+balloon past 1 GB while editing). Lesson files still call
+`enableInjection()` and declare `@ObserveInjection` — those are no-ops
+provided by `Shared/InjectStubs.swift`.
+
+For more aggressive optimization, run:
+
+```bash
+./scripts/optimize-xcode-ram.sh    # caps compile concurrency, disables SPM index, etc.
+./scripts/restore-xcode-defaults.sh # revert
+```
+
+Recommended workflow on 8 GB:
+- prefer **My Mac (Mac Catalyst)** over the iOS Simulator (saves ~1 GB);
+- run only one of `.xcodeproj` / `.swiftpm` at a time;
+- close other Xcode windows when not in use.
+
 ### Run tests
 
 ```bash

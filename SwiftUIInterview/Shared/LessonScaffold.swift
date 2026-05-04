@@ -1,5 +1,4 @@
 import SwiftUI
-import Inject
 
 private struct HotReload: ViewModifier {
     @ObserveInjection var inject

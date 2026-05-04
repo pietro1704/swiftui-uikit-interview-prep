@@ -9,9 +9,6 @@ packages:
   SnapshotTesting:
     url: https://github.com/pointfreeco/swift-snapshot-testing
     from: 1.17.0
-  Inject:
-    url: https://github.com/krzysztofzablocki/Inject
-    from: 1.5.2
 settings:
   base:
     SWIFT_VERSION: "5.9"
@@ -25,8 +22,6 @@ targets:
     platform: iOS
     sources:
       - path: SwiftUIInterview
-    dependencies:
-      - package: Inject
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.pietro.SwiftUIInterview
@@ -40,7 +35,6 @@ targets:
         DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: "NO"
       configs:
         Debug:
-          OTHER_LDFLAGS: "$(inherited) -Xlinker -interposable"
           EMIT_FRONTEND_COMMAND_LINES: "YES"
   SwiftUIInterviewTests:
     type: bundle.unit-test
