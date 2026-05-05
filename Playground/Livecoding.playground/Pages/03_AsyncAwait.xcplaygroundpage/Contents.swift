@@ -145,7 +145,7 @@ final class ConsoleLog: ObservableObject {
     func log(_ s: String) { lines.append(s) }
 }
 
-struct ConsoleView: View {
+struct Page3LiveView: View {
     @ObservedObject var log: ConsoleLog
     var body: some View {
         ScrollView {
@@ -165,7 +165,7 @@ struct ConsoleView: View {
 let demoLog = ConsoleLog()
 
 PlaygroundPage.current.needsIndefiniteExecution = true
-PlaygroundPage.current.setLiveView(ConsoleView(log: demoLog))
+PlaygroundPage.current.setLiveView(Page3LiveView(log: demoLog))
 
 Task { @MainActor in
     demoLog.log("▶ async demo: counting 3 → 0 every 0.5s")

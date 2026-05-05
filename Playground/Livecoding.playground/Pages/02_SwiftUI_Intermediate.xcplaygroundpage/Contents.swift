@@ -17,7 +17,7 @@ struct LiveAPI: APIClient {
 // TODO: 1) define a private EnvironmentKey for APIClient
 // TODO: 2) extension EnvironmentValues with `var api: any APIClient`
 
-struct DeepFeedView: View {
+struct Page2Exercise1View: View {
     // TODO: read the API client from the environment
     var body: some View {
         // TODO: load on .task and display results
@@ -27,7 +27,7 @@ struct DeepFeedView: View {
 
 // MARK: Drill 2 — View identity surprise (bug-hunt)
 
-struct ProfileView: View {
+struct Page2Exercise2View: View {
     let userId: UUID
     @State private var scrollPos: CGFloat = 0
     var body: some View {
@@ -45,7 +45,7 @@ struct ProfileView: View {
 
 // TODO: HeightKey: PreferenceKey with defaultValue 0 and reduce = max
 
-struct ParentView: View {
+struct Page2Exercise4View: View {
     @State private var measuredHeight: CGFloat = 0
     var body: some View {
         VStack {
@@ -69,7 +69,7 @@ final class FeedVM {
     // TODO: navigation state — selected post (or nil) lives here
 }
 
-struct FeedView: View {
+struct Page2Exercise5View: View {
     @State private var vm = FeedVM()
     var body: some View {
         // TODO: NavigationStack
@@ -93,7 +93,7 @@ struct TagCloudLayout_Empty: Layout {
 
 // MARK: Drill 7 — Focus & keyboard with @FocusState
 
-struct LoginForm_Empty: View {
+struct Page2Exercise7View: View {
     @State private var user = ""
     @State private var pass = ""
     // TODO: enum Field { case user, pass }
@@ -110,7 +110,7 @@ struct LoginForm_Empty: View {
 
 enum Route08: Hashable { case detail(Int); case profile(String) }
 
-struct App08: View {
+struct Page2Exercise8View: View {
     @State private var path = NavigationPath()
     var body: some View {
         NavigationStack(path: $path) {
@@ -126,7 +126,7 @@ struct App08: View {
 
 // MARK: Drill 9 — AnyLayout — adapt HStack/VStack
 
-struct AdaptiveScreen_Empty: View {
+struct Page2Exercise9View: View {
     @Environment(\.horizontalSizeClass) var hSize
     var body: some View {
         // TODO: AnyLayout switching HStackLayout / VStackLayout
@@ -136,32 +136,20 @@ struct AdaptiveScreen_Empty: View {
 
 // MARK: - Live preview
 // Run the playground (▶ in the bottom-left), then Editor → Live View (⌥⌘↵).
-// This Demo shows the FeedView (Drill 5) with the navigation state.
-// Edit Demo to point at any other drill.
+// Change the argument to setLiveView(...) to demo any other drill:
+//   Page2Exercise1View(), Page2Exercise5View(), Page2Exercise7View(), etc.
+//
+// Drills 3 (modifier) and 6 (Layout) don't have standalone views — they
+// modify other views. To preview, wrap them inline:
+//   Text("Hello").modifier(RoundedShadowStyle())
+//   TagCloudLayout { Text("a"); Text("b"); Text("c") }
 
 import PlaygroundSupport
 
-struct Demo: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Drill 2 — view identity").font(.headline)
-            Text("Open the Swift file's stubs and complete each drill, then change `Demo` to render that drill's view.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            Divider()
-            Text("Drill 3 — RoundedShadow modifier (try it)")
-                .font(.headline)
-            Text("Hello, World")
-                .padding()
-                .background(.background, in: RoundedRectangle(cornerRadius: 12))
-                .shadow(radius: 6)
-        }
-        .padding()
+PlaygroundPage.current.setLiveView(
+    Page2Exercise5View()
         .frame(width: 360, height: 240)
-    }
-}
-
-PlaygroundPage.current.setLiveView(Demo())
+)
 
 /*
 
@@ -179,7 +167,7 @@ extension EnvironmentValues {
         set { self[APIClientKey.self] = newValue }
     }
 }
-struct DeepFeedView: View {
+struct Page2Exercise1View: View {
     @Environment(\.api) private var api
     @State private var items: [String] = []
     var body: some View {
@@ -189,7 +177,7 @@ struct DeepFeedView: View {
 }
 
 // ----- Drill 2 -----
-// (a) Parent does ProfileView(userId: userId).id(userId) → forces remount
+// (a) Parent does Page2Exercise2View(userId: userId).id(userId) → forces remount
 //     on every userId change → @State (scrollPos) RESETS.
 // (b) Parent re-renders ProfileView with new userId, no .id, same
 //     position+type → SwiftUI keeps @State, scrollPos PERSISTS (stale).
@@ -218,7 +206,7 @@ struct HeightKey: PreferenceKey {
         value = max(value, nextValue())
     }
 }
-struct ParentView: View {
+struct Page2Exercise4View: View {
     @State private var measuredHeight: CGFloat = 0
     var body: some View {
         VStack {
@@ -238,7 +226,7 @@ final class FeedVM {
     var posts: [Post] = [...]
     var selected: Post?
 }
-struct FeedView: View {
+struct Page2Exercise5View: View {
     @State private var vm = FeedVM()
     var body: some View {
         NavigationStack {

@@ -13,20 +13,23 @@ struct StepperRow: View {
     var body: some View {
         HStack {
             Button("−") { value -= 1 }
+            Text("\(value)")
             Button("+") { value += 1 }
             // TODO: − button decrements value
             // TODO: + button increments value
-            Text("placeholder")
         }
     }
 }
 
-struct CounterView: View {
+struct Page1Exercise1View: View {
     // TODO: declare local state for count, defaulting to 0
+    var count = 0
     var body: some View {
         VStack {
             // TODO: show count.description as a Text
+            Text("count")
             // TODO: embed StepperRow, passing the binding
+            StepperRow(value: $count)
             Text("placeholder")
         }
     }
@@ -39,7 +42,7 @@ struct Fruit {
     var emoji: String
 }
 
-struct FruitList: View {
+struct Page1Exercise2View: View {
     @State private var fruits: [Fruit] = [
         .init(name: "Mango", emoji: "🥭"),
         .init(name: "Apple", emoji: "🍎"),
@@ -64,7 +67,7 @@ final class SearchVM_Empty {
     var results: [String] { ["one", "two", "three"].filter { $0.hasPrefix(query) } }
 }
 
-struct SearchView_Empty: View {
+struct Page1Exercise3View: View {
     // TODO: own a SearchVM as @State
     var body: some View {
         VStack {
@@ -77,7 +80,7 @@ struct SearchView_Empty: View {
 
 // MARK: Drill 4 — `.task` vs `.onAppear` (bug-hunt — fix the leak)
 
-struct FeedView_Buggy: View {
+struct Page1Exercise4View: View {
     @State private var posts: [String] = []
     var body: some View {
         List(posts, id: \.self) { Text($0) }
@@ -98,7 +101,7 @@ final class User_05 {
     var email = ""
 }
 
-struct EditUserView_Buggy: View {
+struct Page1Exercise5View: View {
     let user: User_05            // ❌ no $ available — fix the property declaration
     var body: some View {
         Form {
@@ -119,7 +122,7 @@ let groups_06: [Group_06] = [
     .init(title: "Veggies", items: ["Kale", "Carrot"]),
 ]
 
-struct GroupedList_Empty: View {
+struct Page1Exercise6View: View {
     var body: some View {
         // TODO: List with one Section per group
         List { Text("placeholder") }
@@ -132,7 +135,7 @@ final class Theme_OLD: ObservableObject {
     @Published var color: Color = .blue
 }
 
-struct DeepView_OLD: View {
+struct Page1Exercise7View: View {
     @EnvironmentObject var theme: Theme_OLD
     var body: some View {
         Text("hi").foregroundStyle(theme.color)
@@ -142,25 +145,15 @@ struct DeepView_OLD: View {
 
 // MARK: - Live preview
 // Run the playground (▶ in the bottom-left), then Editor → Live View (⌥⌘↵).
-// Edit `Demo` to point at whichever drill you want to see running.
+// Change the argument to setLiveView(...) to demo any other drill:
+//   Page1Exercise2View(), Page1Exercise3View(), etc.
 
 import PlaygroundSupport
 
-struct Demo: View {
-    @State private var count = 0
-    var body: some View {
-        VStack(spacing: 16) {
-            Text("Drill 1 — Counter")
-                .font(.headline)
-            Text("\(count)").font(.system(size: 60, weight: .bold))
-            StepperRow(value: $count)
-        }
-        .padding()
+PlaygroundPage.current.setLiveView(
+    Page1Exercise1View()
         .frame(width: 320, height: 240)
-    }
-}
-
-PlaygroundPage.current.setLiveView(Demo())
+)
 
 /*
 
@@ -180,7 +173,7 @@ struct StepperRow: View {
         .buttonStyle(.bordered)
     }
 }
-struct CounterView: View {
+struct Page1Exercise1View: View {
     @State private var count = 0
     var body: some View {
         VStack(spacing: 16) {

@@ -147,7 +147,7 @@ func runLRUDemo() -> [String] {
     return out
 }
 
-struct ConsolePage06: View {
+struct Page6LiveView: View {
     let lines: [String]
     var body: some View {
         ScrollView {
@@ -167,7 +167,7 @@ let lines06 = ["▶ LRU(capacity=3) demo"] + runLRUDemo() + [
     "",
     "Edit this block to demo any other drill."
 ]
-PlaygroundPage.current.setLiveView(ConsolePage06(lines: lines06))
+PlaygroundPage.current.setLiveView(Page6LiveView(lines: lines06))
 
 /*
 

@@ -80,7 +80,7 @@ func firstDuplicate<T: Hashable>(_ items: [T]) -> T? {
     return nil
 }
 
-struct ConsolePage04: View {
+struct Page4LiveView: View {
     let lines: [String]
     var body: some View {
         ScrollView {
@@ -105,7 +105,7 @@ let lines04: [String] = [
     "Edit this list to demo any other drill."
 ]
 
-PlaygroundPage.current.setLiveView(ConsolePage04(lines: lines04))
+PlaygroundPage.current.setLiveView(Page4LiveView(lines: lines04))
 
 /*
 

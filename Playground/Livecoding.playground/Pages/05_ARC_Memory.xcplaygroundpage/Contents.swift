@@ -73,7 +73,7 @@ struct Clamped_06<Value: Comparable> {
 import SwiftUI
 import PlaygroundSupport
 
-struct ConsolePage05: View {
+struct Page5LiveView: View {
     let lines: [String]
     var body: some View {
         ScrollView {
@@ -109,7 +109,7 @@ let lines05: [String] = [
     "See SOLUTIONS for hand-rolled Buffer with isKnownUniquelyReferenced."
 ]
 
-PlaygroundPage.current.setLiveView(ConsolePage05(lines: lines05))
+PlaygroundPage.current.setLiveView(Page5LiveView(lines: lines05))
 
 /*
 
