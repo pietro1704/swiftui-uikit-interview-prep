@@ -1,3 +1,5 @@
+// Editor → Show Rendered Markup (⌥⌘⇧M) for formatted text
+
 /*:
  # 05 — ARC, retain cycles, and copy-on-write
 

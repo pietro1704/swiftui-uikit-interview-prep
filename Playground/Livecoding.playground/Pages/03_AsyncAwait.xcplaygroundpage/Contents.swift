@@ -1,3 +1,5 @@
+// Editor → Show Rendered Markup (⌥⌘⇧M) for formatted text
+
 /*:
  # 03 — async/await + Structured Concurrency
 

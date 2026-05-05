@@ -1,3 +1,5 @@
+// Editor → Show Rendered Markup (⌥⌘⇧M) for formatted text
+
 /*:
  # 06 — Classic livecoding problems in Swift
 

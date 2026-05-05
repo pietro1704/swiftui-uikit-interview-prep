@@ -1,3 +1,5 @@
+// Editor → Show Rendered Markup (⌥⌘⇧M) for formatted text
+
 /*:
  # 01 — SwiftUI Fundamentals (livecoding drills)
 

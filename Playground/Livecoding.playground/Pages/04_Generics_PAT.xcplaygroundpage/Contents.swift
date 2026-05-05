@@ -1,3 +1,5 @@
+// Editor → Show Rendered Markup (⌥⌘⇧M) for formatted text
+
 /*:
  # 04 — Generics, PAT, opaque vs existential, advanced type system
 
