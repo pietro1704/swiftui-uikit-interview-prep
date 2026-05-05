@@ -65,6 +65,52 @@ struct Clamped_06<Value: Comparable> {
 
 // MARK: Drill 7 — AnyHashable performance (discussion)
 
+// MARK: - Live preview
+// Run the playground, then Editor → Live View (⌥⌘↵).
+// Console demos isKnownUniquelyReferenced on Array (the same primitive
+// you'll use to build the CoW Buffer in Drill 4).
+
+import SwiftUI
+import PlaygroundSupport
+
+struct ConsolePage05: View {
+    let lines: [String]
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                    Text(line).font(.system(size: 13, design: .monospaced))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
+        .frame(width: 360, height: 200)
+    }
+}
+
+// Helper: count how many references a class has, by attempting unique check.
+func ownershipDemo() -> [String] {
+    var lines: [String] = []
+    var a = Array(repeating: 1, count: 1_000_000)
+    lines.append("a allocated, count=\(a.count)")
+    var b = a
+    lines.append("b = a (O(1) — share buffer)")
+    b.append(2)
+    lines.append("b.append(2) → CoW: b cloned, a untouched")
+    lines.append("a.count=\(a.count), b.count=\(b.count)")
+    return lines
+}
+
+let lines05: [String] = [
+    "▶ Copy-on-Write demo (Drill 3 illustrated)"
+] + ownershipDemo() + [
+    "",
+    "See SOLUTIONS for hand-rolled Buffer with isKnownUniquelyReferenced."
+]
+
+PlaygroundPage.current.setLiveView(ConsolePage05(lines: lines05))
+
 /*
 
 ================================================================================

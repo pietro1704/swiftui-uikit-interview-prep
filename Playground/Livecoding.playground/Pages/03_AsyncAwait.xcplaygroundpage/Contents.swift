@@ -131,6 +131,51 @@ final class FeedVM_12 {
 }
 // TODO: rewrite init so it can be called from any context.
 
+// MARK: - Live preview
+// Run the playground, then Editor → Live View (⌥⌘↵).
+// This page is mostly async/CLI work — the live view is a console showing
+// output from a quick demo (here: a 3-tick countdown).
+
+import SwiftUI
+import PlaygroundSupport
+
+@MainActor
+final class ConsoleLog: ObservableObject {
+    @Published var lines: [String] = []
+    func log(_ s: String) { lines.append(s) }
+}
+
+struct ConsoleView: View {
+    @ObservedObject var log: ConsoleLog
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(Array(log.lines.enumerated()), id: \.offset) { _, line in
+                    Text(line).font(.system(size: 13, design: .monospaced))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
+        .frame(width: 360, height: 240)
+        .background(.black.opacity(0.05))
+    }
+}
+
+let demoLog = ConsoleLog()
+
+PlaygroundPage.current.needsIndefiniteExecution = true
+PlaygroundPage.current.setLiveView(ConsoleView(log: demoLog))
+
+Task { @MainActor in
+    demoLog.log("▶ async demo: counting 3 → 0 every 0.5s")
+    for i in stride(from: 3, through: 0, by: -1) {
+        demoLog.log("  tick \(i)")
+        try? await Task.sleep(for: .milliseconds(500))
+    }
+    demoLog.log("✓ done. Edit this Task to demo any other drill.")
+}
+
 /*
 
 ================================================================================

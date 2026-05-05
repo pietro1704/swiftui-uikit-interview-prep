@@ -79,6 +79,96 @@ enum Route_07: Hashable {
 // TODO: struct DeepLinkParser { func route(from url: URL) -> Route_07? }
 // TODO: a tiny round-trip test.
 
+// MARK: - Live preview
+// Run the playground, then Editor → Live View (⌥⌘↵).
+// Demos a working LRU cache (Drill 2 reference solution inline).
+
+import SwiftUI
+import PlaygroundSupport
+
+final class LRU_Demo<Key: Hashable, Value> {
+    final class Node {
+        let key: Key
+        var value: Value
+        var prev: Node?
+        var next: Node?
+        init(_ k: Key, _ v: Value) { self.key = k; self.value = v }
+    }
+    private let capacity: Int
+    private var map: [Key: Node] = [:]
+    private var head: Node?
+    private var tail: Node?
+    init(capacity: Int) { self.capacity = capacity }
+    func get(_ key: Key) -> Value? {
+        guard let n = map[key] else { return nil }
+        moveToHead(n)
+        return n.value
+    }
+    func set(_ key: Key, _ value: Value) {
+        if let n = map[key] { n.value = value; moveToHead(n); return }
+        let n = Node(key, value)
+        map[key] = n
+        insertAtHead(n)
+        if map.count > capacity, let stale = tail {
+            remove(stale); map.removeValue(forKey: stale.key)
+        }
+    }
+    private func insertAtHead(_ n: Node) {
+        n.next = head; head?.prev = n; head = n
+        if tail == nil { tail = n }
+    }
+    private func remove(_ n: Node) {
+        n.prev?.next = n.next; n.next?.prev = n.prev
+        if head === n { head = n.next }
+        if tail === n { tail = n.prev }
+        n.prev = nil; n.next = nil
+    }
+    private func moveToHead(_ n: Node) { remove(n); insertAtHead(n) }
+    var snapshot: [(Key, Value)] {
+        var out: [(Key, Value)] = []
+        var cur = head
+        while let n = cur { out.append((n.key, n.value)); cur = n.next }
+        return out
+    }
+}
+
+func runLRUDemo() -> [String] {
+    var out: [String] = []
+    let lru = LRU_Demo<String, Int>(capacity: 3)
+    let steps: [(String, Int)] = [("a", 1), ("b", 2), ("c", 3), ("d", 4)]
+    for (k, v) in steps {
+        lru.set(k, v)
+        let snap = lru.snapshot.map { "\($0.0)=\($0.1)" }.joined(separator: " ")
+        out.append("set \(k)=\(v)  →  [\(snap)]")
+    }
+    _ = lru.get("b")
+    let snap = lru.snapshot.map { "\($0.0)=\($0.1)" }.joined(separator: " ")
+    out.append("get b      →  [\(snap)]   (b moved to head)")
+    return out
+}
+
+struct ConsolePage06: View {
+    let lines: [String]
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                    Text(line).font(.system(size: 13, design: .monospaced))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
+        .frame(width: 380, height: 220)
+    }
+}
+
+let lines06 = ["▶ LRU(capacity=3) demo"] + runLRUDemo() + [
+    "",
+    "Edit this block to demo any other drill."
+]
+PlaygroundPage.current.setLiveView(ConsolePage06(lines: lines06))
+
 /*
 
 ================================================================================

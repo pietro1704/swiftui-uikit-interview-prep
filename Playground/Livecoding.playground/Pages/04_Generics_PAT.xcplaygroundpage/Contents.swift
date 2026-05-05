@@ -65,6 +65,48 @@ struct Box<T> { let value: T }
 //     subscript<U>(dynamicMember keyPath: KeyPath<T, U>) -> U { ... }
 // }
 
+// MARK: - Live preview
+// Run the playground, then Editor → Live View (⌥⌘↵).
+// Console shows the output of a quick generics demo.
+
+import SwiftUI
+import PlaygroundSupport
+
+func firstDuplicate<T: Hashable>(_ items: [T]) -> T? {
+    var seen = Set<T>()
+    for item in items {
+        if !seen.insert(item).inserted { return item }
+    }
+    return nil
+}
+
+struct ConsolePage04: View {
+    let lines: [String]
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                    Text(line).font(.system(size: 13, design: .monospaced))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
+        .frame(width: 360, height: 200)
+    }
+}
+
+let demoInts = [1, 2, 3, 2, 4]
+let demoStrs = ["a", "b", "c"]
+let lines04: [String] = [
+    "▶ generics demo",
+    "firstDuplicate(\(demoInts)) = \(String(describing: firstDuplicate(demoInts)))",
+    "firstDuplicate(\(demoStrs)) = \(String(describing: firstDuplicate(demoStrs)))",
+    "Edit this list to demo any other drill."
+]
+
+PlaygroundPage.current.setLiveView(ConsolePage04(lines: lines04))
+
 /*
 
 ================================================================================

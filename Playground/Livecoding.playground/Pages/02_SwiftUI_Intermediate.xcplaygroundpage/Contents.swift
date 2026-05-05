@@ -134,6 +134,35 @@ struct AdaptiveScreen_Empty: View {
     }
 }
 
+// MARK: - Live preview
+// Run the playground (▶ in the bottom-left), then Editor → Live View (⌥⌘↵).
+// This Demo shows the FeedView (Drill 5) with the navigation state.
+// Edit Demo to point at any other drill.
+
+import PlaygroundSupport
+
+struct Demo: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Drill 2 — view identity").font(.headline)
+            Text("Open the Swift file's stubs and complete each drill, then change `Demo` to render that drill's view.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Divider()
+            Text("Drill 3 — RoundedShadow modifier (try it)")
+                .font(.headline)
+            Text("Hello, World")
+                .padding()
+                .background(.background, in: RoundedRectangle(cornerRadius: 12))
+                .shadow(radius: 6)
+        }
+        .padding()
+        .frame(width: 360, height: 240)
+    }
+}
+
+PlaygroundPage.current.setLiveView(Demo())
+
 /*
 
 ================================================================================

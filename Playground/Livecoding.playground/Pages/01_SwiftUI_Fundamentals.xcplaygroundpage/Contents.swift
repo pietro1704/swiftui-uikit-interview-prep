@@ -9,11 +9,11 @@ import Observation
 
 struct StepperRow: View {
     // TODO: declare a Binding<Int> property
-    @Binding var value = 0
+    @Binding var value: Int
     var body: some View {
         HStack {
-            
-            Button { value += 1} { Label}
+            Button("−") { value -= 1 }
+            Button("+") { value += 1 }
             // TODO: − button decrements value
             // TODO: + button increments value
             Text("placeholder")
@@ -102,7 +102,7 @@ struct EditUserView_Buggy: View {
     let user: User_05            // ❌ no $ available — fix the property declaration
     var body: some View {
         Form {
-            TextField("Name", text: $user.name)   // won't compile
+//            TextField("Name", text: $user.name)   // won't compile
         }
     }
 }
@@ -139,6 +139,28 @@ struct DeepView_OLD: View {
     }
 }
 // TODO: migrate Theme_OLD to @Observable; migrate DeepView_OLD to @Environment(Theme.self).
+
+// MARK: - Live preview
+// Run the playground (▶ in the bottom-left), then Editor → Live View (⌥⌘↵).
+// Edit `Demo` to point at whichever drill you want to see running.
+
+import PlaygroundSupport
+
+struct Demo: View {
+    @State private var count = 0
+    var body: some View {
+        VStack(spacing: 16) {
+            Text("Drill 1 — Counter")
+                .font(.headline)
+            Text("\(count)").font(.system(size: 60, weight: .bold))
+            StepperRow(value: $count)
+        }
+        .padding()
+        .frame(width: 320, height: 240)
+    }
+}
+
+PlaygroundPage.current.setLiveView(Demo())
 
 /*
 
