@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='7.0' target-platform='ios' swift-version='6' display-mode='rendered' buildActiveScheme='true' executeOnSourceChanges='true' importAppTypes='true'>
+<playground version='7.0' target-platform='ios' swift-version='6' display-mode='rendered' buildActiveScheme='true' importAppTypes='true'>
     <pages>
         <page name='01_SwiftUI_Fundamentals'/>
         <page name='02_SwiftUI_Intermediate'/>
+        <page name='02b_SwiftUI_LowPriority'/>
         <page name='03_AsyncAwait'/>
         <page name='04_Generics_PAT'/>
         <page name='05_ARC_Memory'/>

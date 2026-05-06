@@ -5,6 +5,27 @@
 import SwiftUI
 import Observation
 
+// MARK: - Live preview
+// Run the playground (▶ in the bottom-left), then Editor → Live View (⌥⌘↵).
+// Change the argument to setLiveView(...) to demo any other drill:
+//   Page1Exercise2View(), Page1Exercise3View(), etc.
+
+import PlaygroundSupport
+
+PlaygroundPage.current.needsIndefiniteExecution = true
+PlaygroundPage.current.setLiveView(
+    VStack {
+        Page1Exercise7View()
+        var oi = "po"
+        Text("iu")
+        DeepView()
+        
+    }
+        .environment(Theme(color: .yellow))
+        .environment(MyText())
+        .frame(width: 300, height: 500)
+)
+
 // MARK: Drill 1 — Counter with extracted child
 
 struct StepperRow: View {
@@ -29,7 +50,7 @@ struct Page1Exercise1View: View {
             // TODO: show count.description as a Text
             Text("count")
             // TODO: embed StepperRow, passing the binding
-            StepperRow(value: $count)
+            //            StepperRow(value: $count)
             Text("placeholder")
         }
     }
@@ -38,6 +59,7 @@ struct Page1Exercise1View: View {
 // MARK: Drill 2 — Why doesn't this list animate? (bug-hunt — fix `id:`)
 
 struct Fruit {
+    var id = UUID()
     var name: String
     var emoji: String
 }
@@ -50,8 +72,8 @@ struct Page1Exercise2View: View {
     var body: some View {
         List {
             // BUG: identity churns when items mutate. Why?
-            ForEach(fruits, id: \.name) { fruit in
-                Text("\(fruit.emoji) \(fruit.name)")
+            ForEach(fruits, id: \.id) { fruit in
+                Text("\(fruit.emoji) \(fruit.name) \(fruit.id)")
             }
             Button("Add Grape") {
                 withAnimation { fruits.append(.init(name: "Grape", emoji: "🍇")) }
@@ -62,18 +84,25 @@ struct Page1Exercise2View: View {
 
 // MARK: Drill 3 — Convert UIKit thinking to SwiftUI
 
+@Observable
 final class SearchVM_Empty {
     var query = ""
-    var results: [String] { ["one", "two", "three"].filter { $0.hasPrefix(query) } }
+    var results: [String] { ["one", "two", "three"].filter { $0.hasPrefix(query)} }
 }
 
 struct Page1Exercise3View: View {
     // TODO: own a SearchVM as @State
+    @State var vm = SearchVM_Empty()
     var body: some View {
-        VStack {
-            // TODO: TextField bound to vm.query
-            // TODO: List of vm.results
-            Text("placeholder")
+        TextField("fruit", text: $vm.query)
+            .textFieldStyle(.roundedBorder)
+            .padding()
+            .textInputAutocapitalization(.never)
+        // TODO: TextField bound to vm.query
+        // TODO: List of vm.results
+        Text("placeholder")
+        List(vm.results, id: \String.self) { str in
+            Text(str)
         }
     }
 }
@@ -81,14 +110,12 @@ struct Page1Exercise3View: View {
 // MARK: Drill 4 — `.task` vs `.onAppear` (bug-hunt — fix the leak)
 
 struct Page1Exercise4View: View {
-    @State private var posts: [String] = []
+    @State private var posts: [String] = ["poist1"]
     var body: some View {
         List(posts, id: \.self) { Text($0) }
-            .onAppear {
-                Task {
-                    try? await Task.sleep(for: .seconds(2))
-                    posts = ["fetched"]   // mutation may run after dismiss
-                }
+            .task {
+                try? await Task.sleep(for: .seconds(2))
+                posts.append("fetched") // mutation may run after dismiss
             }
     }
 }
@@ -102,30 +129,55 @@ final class User_05 {
 }
 
 struct Page1Exercise5View: View {
-    let user: User_05            // ❌ no $ available — fix the property declaration
+    @Bindable
+    // ❌ no $ available — fix the property declaration
+    var user = User_05()
     var body: some View {
         Form {
-//            TextField("Name", text: $user.name)   // won't compile
+            TextField("Name", text: $user.name)   // won't compile
+            TextField("email", text: $user.email)   // won't compile
+            Text("name: \(user.name)")
+            Text("email: \(user.email)")
+                .colorScheme(.dark)
         }
     }
 }
 
 // MARK: Drill 6 — List with sections
 
-struct Group_06 {
+struct Group_06: Identifiable {
+    var id = UUID()
     let title: String
     let items: [String]
 }
 
-let groups_06: [Group_06] = [
-    .init(title: "Fruits", items: ["Apple", "Mango"]),
-    .init(title: "Veggies", items: ["Kale", "Carrot"]),
-]
 
 struct Page1Exercise6View: View {
+    let groups_06: [Group_06] = [
+        .init(title: "Fruits", items: ["Apple", "Mango"]),
+        .init(title: "Veggies", items: ["Kale", "Carrot"]),
+        .init(title: "pips?", items: ["Kale", "Carrot", "asdfasdf"]),
+    ]
     var body: some View {
         // TODO: List with one Section per group
-        List { Text("placeholder") }
+        List {
+            ForEach(groups_06) { group_06 in
+                Section(group_06.title) {
+                    ForEach(group_06.items, id: \String.self) { item in
+                        Text(item)
+                            .swipeActions(edge: .trailing) {     // default edge is trailing
+                                Button(role: .destructive) { /* delete */ }
+                                Label("Delete", systemImage: "trash")
+                            }
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button(role: .destructive) {
+                            print("delete") }
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -135,130 +187,144 @@ final class Theme_OLD: ObservableObject {
     @Published var color: Color = .blue
 }
 
-struct Page1Exercise7View: View {
-    @EnvironmentObject var theme: Theme_OLD
+@Observable
+final class Theme {
+    init(color: Color) {
+        self.color = color
+    }
+    var color: Color = .blue
+}
+
+@Observable
+class MyText {
+   var text = ""
+}
+
+struct DeepView: View {
+    @Environment(Theme.self) private var theme
+    @Environment(MyText.self) private var text
     var body: some View {
-        Text("hi").foregroundStyle(theme.color)
+//        Text("\(text)").foregroundStyle(theme.color)
+    }
+}
+
+struct Page1Exercise7View: View {
+    @Environment(Theme.self) var theme
+    @Environment(MyText.self) var text
+    var body: some View {
+        DeepView()
+        Text(theme.color.description)
+        Text(text.text)
     }
 }
 // TODO: migrate Theme_OLD to @Observable; migrate DeepView_OLD to @Environment(Theme.self).
 
-// MARK: - Live preview
-// Run the playground (▶ in the bottom-left), then Editor → Live View (⌥⌘↵).
-// Change the argument to setLiveView(...) to demo any other drill:
-//   Page1Exercise2View(), Page1Exercise3View(), etc.
 
-import PlaygroundSupport
-
-PlaygroundPage.current.setLiveView(
-    Page1Exercise1View()
-        .frame(width: 320, height: 240)
-)
 
 /*
-
-================================================================================
-SOLUTIONS
-================================================================================
-
-// ----- Drill 1 -----
-struct StepperRow: View {
-    @Binding var value: Int
-    var body: some View {
-        HStack {
-            Button("−") { value -= 1 }
-            Text("\(value)").font(.title2).monospacedDigit().frame(minWidth: 40)
-            Button("+") { value += 1 }
-        }
-        .buttonStyle(.bordered)
-    }
-}
-struct Page1Exercise1View: View {
-    @State private var count = 0
-    var body: some View {
-        VStack(spacing: 16) {
-            Text("\(count)").font(.system(size: 60, weight: .bold))
-            StepperRow(value: $count)
-        }
-    }
-}
-
-// ----- Drill 2 -----
-// Bug: id: \.name uses content as identity. Renaming a fruit churns
-// identity → SwiftUI tears down the row instead of updating it.
-// Fix: stable id (UUID), use ForEach(fruits) with Identifiable.
-//
-// struct Fruit: Identifiable { let id = UUID(); var name: String; var emoji: String }
-// ForEach(fruits) { fruit in Text("\(fruit.emoji) \(fruit.name)") }
-
-// ----- Drill 3 -----
-@Observable
-final class SearchVM {
-    var query = ""
-    private let dataset = ["Swift", "SwiftUI", "Combine", "Concurrency"]
-    var results: [String] {
-        query.isEmpty ? dataset : dataset.filter { $0.localizedCaseInsensitiveContains(query) }
-    }
-}
-struct SearchView: View {
-    @State private var vm = SearchVM()
-    var body: some View {
-        VStack {
-            TextField("Search", text: $vm.query)
-                .textFieldStyle(.roundedBorder)
-            List(vm.results, id: \.self) { Text($0) }
-        }
-    }
-}
-
-// ----- Drill 4 -----
-struct FeedView: View {
-    @State private var posts: [String] = []
-    var body: some View {
-        List(posts, id: \.self) { Text($0) }
-            .task {                                 // tied to view lifetime
-                try? await Task.sleep(for: .seconds(2))
-                posts = ["fetched"]
-            }
-    }
-}
-// .task auto-cancels when view disappears; .onAppear { Task {} } does NOT.
-
-// ----- Drill 5 -----
-struct EditUserView: View {
-    @Bindable var user: User_05      // unlocks $user.name etc.
-    var body: some View {
-        Form {
-            TextField("Name", text: $user.name)
-            TextField("Email", text: $user.email)
-        }
-    }
-}
-// Bindable lets a child view that received an @Observable by value still
-// get bindings to its properties — replaces the old ObservedObject pattern.
-
-// ----- Drill 6 -----
-List {
-    ForEach(groups_06, id: \.title) { group in
-        Section(group.title) {
-            ForEach(group.items, id: \.self) { Text($0) }
-        }
-    }
-}
-
-// ----- Drill 7 -----
-@Observable
-final class Theme {
-    var color: Color = .blue
-}
-struct DeepView: View {
-    @Environment(Theme.self) private var theme
-    var body: some View {
-        Text("hi").foregroundStyle(theme.color)
-    }
-}
-// App entry:
-//   @State private var theme = Theme()
-//   ContentView().environment(theme)
-
-*/
+ 
+ ================================================================================
+ SOLUTIONS
+ ================================================================================
+ 
+ // ----- Drill 1 -----
+ struct StepperRow: View {
+ @Binding var value: Int
+ var body: some View {
+ HStack {
+ Button("−") { value -= 1 }
+ Text("\(value)").font(.title2).monospacedDigit().frame(minWidth: 40)
+ Button("+") { value += 1 }
+ }
+ .buttonStyle(.bordered)
+ }
+ }
+ struct Page1Exercise1View: View {
+ @State private var count = 0
+ var body: some View {
+ VStack(spacing: 16) {
+ Text("\(count)").font(.system(size: 60, weight: .bold))
+ StepperRow(value: $count)
+ }
+ }
+ }
+ 
+ // ----- Drill 2 -----
+ // Bug: id: \.name uses content as identity. Renaming a fruit churns
+ // identity → SwiftUI tears down the row instead of updating it.
+ // Fix: stable id (UUID), use ForEach(fruits) with Identifiable.
+ //
+ // struct Fruit: Identifiable { let id = UUID(); var name: String; var emoji: String }
+ // ForEach(fruits) { fruit in Text("\(fruit.emoji) \(fruit.name)") }
+ 
+ // ----- Drill 3 -----
+ @Observable
+ final class SearchVM {
+ var query = ""
+ private let dataset = ["Swift", "SwiftUI", "Combine", "Concurrency"]
+ var results: [String] {
+ query.isEmpty ? dataset : dataset.filter { $0.localizedCaseInsensitiveContains(query) }
+ }
+ }
+ struct SearchView: View {
+ @State private var vm = SearchVM()
+ var body: some View {
+ VStack {
+ TextField("Search", text: $vm.query)
+ .textFieldStyle(.roundedBorder)
+ List(vm.results, id: \.self) { Text($0) }
+ }
+ }
+ }
+ 
+ // ----- Drill 4 -----
+ struct FeedView: View {
+ @State private var posts: [String] = []
+ var body: some View {
+ List(posts, id: \.self) { Text($0) }
+ .task {                                 // tied to view lifetime
+ try? await Task.sleep(for: .seconds(2))
+ posts = ["fetched"]
+ }
+ }
+ }
+ // .task auto-cancels when view disappears; .onAppear { Task {} } does NOT.
+ 
+ // ----- Drill 5 -----
+ struct EditUserView: View {
+ @Bindable var user: User_05      // unlocks $user.name etc.
+ var body: some View {
+ Form {
+ TextField("Name", text: $user.name)
+ TextField("Email", text: $user.email)
+ }
+ }
+ }
+ // Bindable lets a child view that received an @Observable by value still
+ // get bindings to its properties — replaces the old ObservedObject pattern.
+ 
+ // ----- Drill 6 -----
+ List {
+ ForEach(groups_06, id: \.title) { group in
+ Section(group.title) {
+ ForEach(group.items, id: \.self) { Text($0) }
+ }
+ }
+ }
+ 
+ // ----- Drill 7 -----
+ @Observable
+ final class Theme {
+ var color: Color = .blue
+ }
+ struct DeepView: View {
+ @Environment(Theme.self) private var theme
+ var body: some View {
+ Text("hi").foregroundStyle(theme.color)
+ }
+ }
+ // App entry:
+ //   @State private var theme = Theme()
+ //   ContentView().environment(theme)
+ 
+ */
